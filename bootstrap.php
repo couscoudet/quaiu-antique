@@ -25,3 +25,5 @@ $dbParams = [
 $conn = DriverManager::getConnection($dbParams);
 
 $entityManager = new EntityManager($conn, $config);
+
+\Doctrine\DBAL\Types\Type::addType('uuid', 'Ramsey\Uuid\Doctrine\UuidType');
