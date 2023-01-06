@@ -2,9 +2,9 @@
 
 require_once "vendor/autoload.php";
 
-//.env to $_ENV
-$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
-$dotenv->load();
+if ($_ENV === []) {
+    require_once "dotenv.php";
+}
 
 //Doctrine connexion conf
 use Doctrine\DBAL\DriverManager;
