@@ -2,6 +2,7 @@
 
 require_once "vendor/autoload.php";
 
+//require dotenv vulcas package only in development
 if ($_ENV === []) {
     require_once "dotenv.php";
 }
