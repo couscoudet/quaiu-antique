@@ -2,6 +2,11 @@
 
 require_once "vendor/autoload.php";
 
+//.env to $_ENV
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
+//Doctrine connexion conf
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
@@ -16,10 +21,11 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
 
 $dbParams = [
     'driver' => 'pdo_mysql',
-    'user' => 'root',
-    'password' => '',
-    'dbname' => 'quai_antique',
-    'host' => 'localhost'
+    'user' => ($_ENV['ENV_TYPE'] && $_ENV['ENV_TYPE']=='dev') ? $_ENV['DB_USER_DEV'] : $_ENV['DB_USER'],
+    'password' => ($_ENV['ENV_TYPE'] && $_ENV['ENV_TYPE']=='dev') ? $_ENV['DB_PASSWORD_DEV'] : $_ENV['DB_PASSWORD'],
+    'dbname' => ($_ENV['ENV_TYPE'] && $_ENV['ENV_TYPE']=='dev') ? $_ENV['DB_NAME_DEV'] : $_ENV['DB_NAME'],
+    'host' => ($_ENV['ENV_TYPE'] && $_ENV['ENV_TYPE']=='dev') ? $_ENV['DB_HOST_DEV'] : $_ENV['DB_HOST'],
+    'server_version' => 'mariad-db-10.4.24'
 ];
 
 $conn = DriverManager::getConnection($dbParams);
