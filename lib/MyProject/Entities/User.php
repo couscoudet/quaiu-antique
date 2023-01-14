@@ -1,12 +1,15 @@
 <?php
 
+namespace MyProject\Model;
+
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users')]
-class User
+class User extends Visitor
 {
 
     #[ORM\Id]

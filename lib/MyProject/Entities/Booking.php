@@ -1,5 +1,7 @@
 <?php
 
+namespace MyProject\Model;
+
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
@@ -30,6 +32,15 @@ class Booking
     /** @var string */
     #[ORM\Column(type: 'string')]
     private string $allergies;
+
+    /** @var string */
+    #[ORM\Column(type: 'string')]
+    private string $infos;
+
+    /** @var Visitor */
+    #[ORM\ManyToOne(targetEntity: Visitor::class)]
+    #[ORM\JoinColumn(name: 'booked_by_id', referencedColumnName: 'id')]
+    private Visitor|null $visitor = null;
 
 
     /**
@@ -116,6 +127,26 @@ class Booking
     public function setAllergies($allergies)
     {
         $this->allergies = $allergies;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of visitor
+     */ 
+    public function getVisitor()
+    {
+        return $this->visitor;
+    }
+
+    /**
+     * Set the value of visitor
+     *
+     * @return  self
+     */ 
+    public function setVisitor(Visitor $visitor)
+    {
+        $this->visitor = $visitor;
 
         return $this;
     }

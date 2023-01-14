@@ -5,9 +5,12 @@
         "symfony/yaml": "^6.2",
         "symfony/cache": "^6.2",
         "ramsey/uuid-doctrine": "^2.0",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "doctrine/migrations": "^3.5"
     },
     "autoload": {
-        "psr-0": {"": "src/"}
+        "psr-4": {"MyProject\\Model\\": "lib/MyProject/Entities/"}
+        
+        
     }
 }

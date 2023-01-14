@@ -1,11 +1,16 @@
 <?php
 
+namespace MyProject\Model;
+
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'visitors')]
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[ORM\DiscriminatorMap(['visitor' => Visitor::class, 'user' => User::class])]
 
 class Visitor
 {
