@@ -40,8 +40,12 @@ class Booking
     /** @var Visitor */
     #[ORM\ManyToOne(targetEntity: Visitor::class)]
     #[ORM\JoinColumn(name: 'booked_by_id', referencedColumnName: 'id')]
-    private Visitor|null $visitor = null;
+    private Visitor $visitor ;
 
+    /** @var Availability */
+    #[ORM\ManyToOne(targetEntity: Availability::class)]
+    #[ORM\JoinColumn(name: 'booked_on_id', referencedColumnName: 'id')]
+    private Availability $availability;
 
     /**
      * Get the value of slot

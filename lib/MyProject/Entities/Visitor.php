@@ -8,9 +8,9 @@ use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'visitors')]
-#[ORM\InheritanceType('JOINED')]
+#[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[ORM\DiscriminatorMap(['visitor' => Visitor::class, 'user' => User::class])]
+#[ORM\DiscriminatorMap(['visitor' => Visitor::class, 'user' => User::class, 'customer' => Customer::class, 'admin' => Admin::class])]
 
 class Visitor
 {
