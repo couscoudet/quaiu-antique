@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class Customer extends User
 {
+    #[ORM\Column(type: 'string')]
     private string $allergies;
 
     /**
