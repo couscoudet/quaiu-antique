@@ -30,10 +30,10 @@ class Meal
     #[ORM\Column(type: 'string')]
     private string $comments;
 
-    #[JoinTable(name: 'meals_dishers')]
-    #[JoinColumn(name: 'meal_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'dish_id', referencedColumnName: 'id')]
-    #[ManyToMany(targetEntity: Dish::class)]
+    #[ORM\JoinTable(name: 'meals_dishers')]
+    #[ORM\JoinColumn(name: 'meal_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'dish_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: Dish::class)]
     private Collection $groups;
 
     public function __construct() {

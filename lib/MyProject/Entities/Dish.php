@@ -26,6 +26,20 @@ class Dish
     #[ORM\Column(type: 'boolean')]
     private bool $isActive;
 
+    #[ORM\JoinTable(name: 'dishes_tags')]
+    #[ORM\JoinColumn(name: 'dish_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
+    private Collection $groups;
+
+    public function __construct() {
+        $this->groups = new ArrayCollection();
+    }
+
+    #[ORM\OneToOne(targetEntity: GalleryImage::class)]
+    #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id')]
+    private GalleryImage|null $galleryImage=null;
+
     /**
      * Get the value of id
      */ 

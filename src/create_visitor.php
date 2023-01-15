@@ -1,11 +1,13 @@
 <?php
 
-// require_once __DIR__ . "/../bootstrap.php";
+use MyProject\Model\Visitor;
 
-// $newVisitorEmail = "ysoultane@gmail.com";
+require_once __DIR__ . "/../bootstrap.php";
 
-// $visitor = new Visitor;
-// $visitor->setEmail($newVisitorEmail);
+$newVisitorEmail = "ysoultane@gmail.com";
 
-// $entityManager->persist($visitor);
-// $entityManager->flush($visitor);
+$visitor = new Visitor;
+$visitor->setEmail($newVisitorEmail);
+
+$entityManager->persist($visitor);
+$entityManager->flush($visitor);
