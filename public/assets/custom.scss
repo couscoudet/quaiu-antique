@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+$body-bg: #FFF1E8;
+$primary: #4C061D;
+$secondary: #16BAC5;
+
+* {
+    color: $primary ;
+    font-family:'Play', sans-serif;
+}
+
+.navbar * {
+    color: $secondary !important;
+}
+
+
+@import "../../vendor/twbs/bootstrap/scss/bootstrap";
