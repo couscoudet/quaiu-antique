@@ -1,6 +1,7 @@
 <!-- container end balise -->
+
 </div>
 
-<script src="/../../../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="../../../public/assets/bootstrap.bundle.min.js"></script>
 </body>
 </html>
