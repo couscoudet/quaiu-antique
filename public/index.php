@@ -4,11 +4,11 @@ require_once __DIR__.'/../lib/MyProject/Views/header.php';
 
 use MyProject\Route\Router;
 
-$router = new Router($_SERVER['REQUEST_URI']);
-$router->get('/', 'MyProject\Controller\Dishmanager@index');
-$router->get('/plat/:id', 'MyProject\Controller\Dishmanager@show');
+// $router = new Router($_SERVER['REQUEST_URI']);
+// $router->get('/', 'MyProject\Controller\Dishmanager@index');
+// $router->get('/plat/:id', 'MyProject\Controller\Dishmanager@show');
 
-$router->run();
+// $router->run();
 
 var_dump($_GET);
 var_dump($_SERVER);
