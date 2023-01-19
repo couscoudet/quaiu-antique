@@ -1,10 +1,14 @@
 <?php
 
-// require_once '/../lib/MyProject/Views/header.php';
+require_once __DIR__.'/../lib/MyProject/Views/header.php';
 
-$prenom = isset($_GET['url']) ? ($_GET['url']) : ('pas de parametre url');
+use MyProject\Route\Router;
 
-echo('hello mon ' . $prenom);
+$router = new Router($_SERVER['REQUEST_URI']);
+$router->get('/', 'MyProject\Controller\Dishmanager@index');
+$router->get('/plat/:id', 'MyProject\Controller\Dishmanager@show');
+
+$router->run();
 
 var_dump($_GET);
 var_dump($_SERVER);

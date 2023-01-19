@@ -14,7 +14,8 @@
         "psr-4": {
             "MyProject\\Model\\": "lib/MyProject/Entities/",
             "MyProject\\View\\": "lib/MyProject/Views/",
-            "MyProject\\Route\\": "lib/MyProject/Routes/"
+            "MyProject\\Route\\": "lib/MyProject/Routes/",
+            "MyProject\\Controller\\": "lib/MyProject/Controllers/"
         }  
     }
 }

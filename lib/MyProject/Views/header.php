@@ -25,7 +25,7 @@ require_once __DIR__.'/../Routes/routeList.php';
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <?php
-                foreach($routes as $name => $route) {
+                foreach($routeList as $name => $route) {
                     echo('<li class="nav-item">
                     <a class="nav-link" href="'.$route. '">'.$name.'</a>');
                 }
