@@ -4,7 +4,14 @@
 
 $prenom = isset($_GET['url']) ? ($_GET['url']) : ('pas de parametre url');
 
-echo('hello mon ' . $prenom);?>
+echo('hello mon ' . $prenom);
+
+var_dump($_GET);
+var_dump($_SERVER);
+
+?>
+
+
 <!-- <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown button
