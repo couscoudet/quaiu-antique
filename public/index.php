@@ -1,11 +1,11 @@
 <?php
 
-require_once 'lib/MyProject/Views/header.php';
+// require_once '/../lib/MyProject/Views/header.php';
 
-$prenom = "yannick";
+$prenom = isset($_GET['url']) ? ($_GET['url']) : ('pas de parametre url');
 
 echo('hello ' . $prenom);?>
-<div class="dropdown">
+<!-- <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown button
   </button>
@@ -14,5 +14,6 @@ echo('hello ' . $prenom);?>
     <li><a class="dropdown-item" href="#">Another action</a></li>
     <li><a class="dropdown-item" href="#">Something else here</a></li>
   </ul>
-</div>
-<?php require_once 'lib/MyProject/Views/footer.php'; ?>
+</div> -->
+<?php 
+// require_once '../lib/MyProject/Views/footer.php'; ?>
