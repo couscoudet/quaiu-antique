@@ -16,11 +16,5 @@
             "MyProject\\View\\": "lib/MyProject/Views/",
             "MyProject\\Route\\": "lib/MyProject/Routes/"
         }  
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php artisan clear-compiled",
-            "chmod -R 777 public/"
-        ]
     }
 }
