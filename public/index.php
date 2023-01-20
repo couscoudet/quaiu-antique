@@ -1,7 +1,19 @@
 <?php
-
+require_once __DIR__.'/../bootstrap.php'; 
+require_once __DIR__.'/../lib/MyProject/Routes/routeList.php';
 require_once __DIR__.'/../lib/MyProject/Views/header.php';
-
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/../../../public/assets/custom.css" rel="stylesheet">
+    <title><?php $pageTitle ?></title>
+</head>
+<body>
+<?php
 use MyProject\Route\Router;
 
 // $router = new Router($_SERVER['REQUEST_URI']);
@@ -28,3 +40,6 @@ var_dump($_SERVER);
 </div> -->
 <?php 
 // require_once '../lib/MyProject/Views/footer.php'; ?>
+<script src="../../../public/assets/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,17 +1,4 @@
-<?php 
-require_once __DIR__.'/../../../bootstrap.php'; 
-require_once __DIR__.'/../Routes/routeList.php';
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/../../../public/assets/custom.css" rel="stylesheet">
-    <title><?php $pageTitle ?></title>
-</head>
-<body>
+
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
