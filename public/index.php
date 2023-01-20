@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../bootstrap.php'; 
 require_once __DIR__.'/../lib/MyProject/Routes/routeList.php';
-require_once __DIR__.'/../lib/MyProject/Views/header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,6 +14,8 @@ require_once __DIR__.'/../lib/MyProject/Views/header.php';
 </head>
 <body>
 <?php
+require_once __DIR__.'/../lib/MyProject/Views/header.php';
+
 use MyProject\Route\Router;
 
 // $router = new Router($_SERVER['REQUEST_URI']);
