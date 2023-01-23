@@ -1,6 +1,11 @@
 <?php
-require_once 'bootstrap.php'; 
-require_once __DIR__.'/lib/MyProject/Routes/routeList.php';
+
+define("MYPROJECT_DIR", dirname(__DIR__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'MyProject');
+define("ASSETS", dirname($_SERVER['SCRIPT_NAME']).DIRECTORY_SEPARATOR.'assets');
+
+require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php'; 
+
+require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'routeList.php';
 
 ?>
 <!DOCTYPE html>
@@ -9,12 +14,12 @@ require_once __DIR__.'/lib/MyProject/Routes/routeList.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/public/assets/custom.css" rel="stylesheet">
+    <link href="<?= ASSETS.DIRECTORY_SEPARATOR.'custom.css'?>" rel="stylesheet">
     <title><?php $pageTitle ?></title>
 </head>
 <body>
 <?php
-require_once __DIR__.'/lib/MyProject/Views/header.php';
+require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'header.php';
 
 use MyProject\Route\Router;
 
@@ -42,6 +47,6 @@ var_dump($_SERVER);
 </div> -->
 <?php 
 // require_once '../lib/MyProject/Views/footer.php'; ?>
-<script src="/public/assets/bootstrap.bundle.min.js"></script>
+<script src="<?= ASSETS.DIRECTORY_SEPARATOR.'bootstrap.bundle.min.js'?>"></script>
 </body>
 </html>
