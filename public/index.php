@@ -31,7 +31,7 @@ use MyProject\Route\Router;
 
 var_dump($_GET);
 var_dump($_SERVER['SCRIPT_NAME']);
-var_dump(dirname($_SERVER['SCRIPT_NAME']));
+var_dump(dirname($_SERVER));
 
 ?>
 
