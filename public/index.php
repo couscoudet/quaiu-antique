@@ -1,7 +1,7 @@
 <?php
 
 define("MYPROJECT_DIR", dirname(__DIR__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'MyProject');
-define("ASSETS", dirname($_SERVER['SCRIPT_NAME']).DIRECTORY_SEPARATOR.'assets');
+define("ASSETS", dirname($_SERVER['PHP_SELF']).DIRECTORY_SEPARATOR.'assets');
 
 require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php'; 
 
@@ -30,7 +30,7 @@ use MyProject\Route\Router;
 // $router->run();
 
 var_dump($_GET);
-var_dump($_SERVER['SCRIPT_NAME']);
+var_dump($_SERVER['DOCUMENT_ROOT']);
 var_dump(($_SERVER));
 
 ?>
