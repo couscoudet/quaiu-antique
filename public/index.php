@@ -29,9 +29,7 @@ use MyProject\Route\Router;
 
 // $router->run();
 
-var_dump($_GET);
-var_dump($_SERVER['DOCUMENT_ROOT']);
-var_dump(($_SERVER));
+echo 'fixed heroku issues with CAPTgym arborescence'
 
 ?>
 
