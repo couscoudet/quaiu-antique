@@ -1,7 +1,7 @@
 <?php
 
 define("MYPROJECT_DIR", dirname(__DIR__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'MyProject');
-define("ASSETS", dirname($_SERVER['SCRIPT_NAME']).DIRECTORY_SEPARATOR.'assets');
+define("ASSETS", DIRECTORY_SEPARATOR.'assets');
 
 require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php'; 
 
