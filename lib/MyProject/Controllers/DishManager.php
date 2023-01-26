@@ -12,4 +12,9 @@ class DishManager {
     {
         echo 'je suis le plat '.$id;
     }
+
+    public function create()
+    {
+        require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDish.php');
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
 $routeList = [
-    'accueil' => '',
-    'créer un plat' => __DIR__.'/../Views/addDish.php'
+    'accueil' => '/',
+    'créer un plat' => '/créer-plat'
 ];

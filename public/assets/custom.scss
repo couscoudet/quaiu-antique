@@ -4,6 +4,7 @@
 $body-bg: #FFF1E8;
 $primary: #4C061D;
 $secondary: #16BAC5;
+$bs-tertiary-bg: #4C061D;
 
 * {
     color: $primary ;
@@ -17,6 +18,11 @@ $secondary: #16BAC5;
 .h1, .h2, .h3, .h4 {
     font-family: 'DM Serif Display', serif;
     color: $primary !important;
+}
+
+.form-control::file-selector-button{
+    background-color: $primary !important ;
+    color: white !important;
 }
 
 
