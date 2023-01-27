@@ -21,14 +21,16 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'rou
 <?php
 require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'header.php';
 
-use MyProject\Route\Router;
+// use MyProject\Route\Router;
 
-$router = new Router($_GET['url']);
-$router->get('/', 'MyProject\Controller\Dishmanager@index');
-$router->get('/plat/:id', 'MyProject\Controller\Dishmanager@show');
-$router->get('/créer-plat', 'MyProject\Controller\Dishmanager@create');
+// $router = new Router($_GET['url']);
+// $router->get('/', 'MyProject\Controller\Dishmanager@index');
+// $router->get('/plat/:id', 'MyProject\Controller\Dishmanager@show');
+// $router->get('/créer-plat', 'MyProject\Controller\Dishmanager@create');
 
-$router->run();
+// $router->run();
+
+echo $_GET['url'] === '' ? 'accueil' : 'page non trouvée';
 
 
 ?>
