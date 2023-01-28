@@ -5,7 +5,7 @@ namespace MyProject\Controller;
 class DishManager {
     public function index()
     {
-        echo 'liste des plats';
+        echo 'liste des plats 2023';
     }
 
     public function show(int $id)
