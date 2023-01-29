@@ -36,7 +36,7 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 $peanut = new MyProject\Controller\DishManager;
 // $method = 'index';
 $peanut->index();
-echo 'liste des plats 2023';
+// echo 'liste des plats 2023';
 
 // $dishManager = new \MyProject\Controller\DishManager;
 
