@@ -31,8 +31,12 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 // $router->run();
 
 use MyProject\Route\Route;
-$route = new Route('','MyProject\Controller\Dishmanager@index');
-$route->execute();
+$route = ['','MyProject\Controller\Dishmanager@index'];
+$params = explode('@', $route[1]);
+$controller = new $params[0]();
+$method = $params[1];
+return isset($method) ?  $controller->$method() : $controller->$method();  
+
 // $dishManager = new \MyProject\Controller\DishManager;
 
 // echo $_GET['url'] === '' ? $dishManager->index() : 'page non trouvée' ;
