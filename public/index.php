@@ -35,7 +35,7 @@ $route = ['','MyProject\Controller\Dishmanager+index'];
 $params = explode('+', $route[1]);
 $controller = new $params[0]();
 $method = $params[1];
-return isset($method) ?  $controller->$method() : $controller->$method();  
+$controller->$method();  
 
 // $dishManager = new \MyProject\Controller\DishManager;
 
