@@ -33,7 +33,7 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 use MyProject\Route\Route;
 $route = ['','MyProject\Controller\Dishmanager+index'];
 $params = ['MyProject\Controller\Dishmanager','index'];
-$controller = new $params[0]();
+$controller = new $params[0];
 $method = $params[1];
 $controller->$method();  
 
