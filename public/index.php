@@ -30,12 +30,12 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 
 // $router->run();
 
-use MyProject\Route\Route;
-$route = ['','MyProject\Controller\Dishmanager+index'];
-$params = ['MyProject\Controller\Dishmanager','index'];
-$controller = new MyProject\Controller\Dishmanager;
-$method = 'index';
-$controller->index();  
+// use MyProject\Route\Route;
+// $route = ['','MyProject\Controller\Dishmanager+index'];
+// $params = ['MyProject\Controller\Dishmanager','index'];
+$peanut = new MyProject\Controller\Dishmanager;
+// $method = 'index';
+$peanut->index();  
 
 // $dishManager = new \MyProject\Controller\DishManager;
 
