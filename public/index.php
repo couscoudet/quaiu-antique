@@ -29,13 +29,13 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 // $router->get('/créer-plat', 'MyProject\Controller\Dishmanager@create');
 
 // $router->run();
-
+use MyProject\Controller\DishManager;
 // use MyProject\Route\Route;
 // $route = ['','MyProject\Controller\Dishmanager+index'];
 // $params = ['MyProject\Controller\Dishmanager','index'];
-// $peanut = new MyProject\Controller\Dishmanager;
+$peanut = new Dishmanager;
 // $method = 'index';
-// $peanut->index();
+$peanut->index();
 echo 'liste des plats 2023';
 
 // $dishManager = new \MyProject\Controller\DishManager;
