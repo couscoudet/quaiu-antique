@@ -2,5 +2,5 @@
 
 $routeList = [
     'accueil' => '/',
-    'créer un plat' => '/créer-plat'
+    'créer un plat' => '/creer-plat'
 ];
