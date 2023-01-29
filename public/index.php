@@ -33,9 +33,10 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 // use MyProject\Route\Route;
 // $route = ['','MyProject\Controller\Dishmanager+index'];
 // $params = ['MyProject\Controller\Dishmanager','index'];
-$peanut = new MyProject\Controller\Dishmanager;
+// $peanut = new MyProject\Controller\Dishmanager;
 // $method = 'index';
-$peanut->index();  
+// $peanut->index();
+echo 'liste des plats 2023';
 
 // $dishManager = new \MyProject\Controller\DishManager;
 
