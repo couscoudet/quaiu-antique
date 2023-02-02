@@ -20,6 +20,10 @@ class Router {
         $this->routes['GET'][] = new Route($path, $controller);
     }
 
+    public function post($path, $controller){
+        $this->routes['POST'][] = new Route($path, $controller);
+    }
+
     public function run(){
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
            if ($route->matches($this->url)) {

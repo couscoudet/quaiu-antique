@@ -25,5 +25,14 @@ $bs-tertiary-bg: #4C061D;
     color: white !important;
 }
 
+#url {
+    display: none ;
+}
+
+.required:after {
+    content:" *" ;
+    color: red ;
+  }
+
 
 @import "../../vendor/twbs/bootstrap/scss/bootstrap";

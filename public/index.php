@@ -23,11 +23,20 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 
 use MyProject\Route\Router;
 
-$router = new Router($_GET['url']);
-$router->get('/', 'MyProject\Controller\DishManager@index');
-$router->get('/plat/:id', 'MyProject\Controller\DishManager@show');
-$router->get('/creer-plat', 'MyProject\Controller\DishManager@create');
-$router->run();
+if (isset($_POST['url'])) {
+  $router = new Router($_POST['url']);
+  $router->post('/confirmer-plat', 'MyProject\Controller\DishManager@confirm');
+  $router->post('/upload', 'MyProject\Controller\DishManager@upload');
+  $router->run();
+}
+else {
+  $router = new Router($_GET['url']);
+  $router->get('/', 'MyProject\Controller\DishManager@index');
+  $router->get('/plat/:id', 'MyProject\Controller\DishManager@show');
+  $router->get('/creer-plat', 'MyProject\Controller\DishManager@create');
+  $router->run();
+}
+
 // $router->run();
 // use MyProject\Controller\DishManager;
 // use MyProject\Route\Route;

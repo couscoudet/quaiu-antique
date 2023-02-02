@@ -30,16 +30,27 @@ class Dish
     #[ORM\JoinColumn(name: 'dish_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: Tag::class)]
-    private Collection $groups;
+    private Collection $tags;
 
-    public function __construct() {
-        $this->groups = new ArrayCollection();
+    public function __construct($value = array()) {
+        if (!empty($value)){
+            $this->hydrate($value);
+            $this->tags = new ArrayCollection();
+        }
     }
 
     #[ORM\OneToOne(targetEntity: GalleryImage::class)]
     #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id')]
     private GalleryImage|null $galleryImage=null;
 
+    public function hydrate($data) {
+        foreach($data as $attribute => $value){
+            $method = 'set'.str_replace(' ', '', ucwords(str_replace('_','', $attribute)));
+            if (is_callable(array($this,$method))) {
+                $this->$method($value);
+            }
+        }
+    }
     /**
      * Get the value of id
      */ 
@@ -104,6 +115,46 @@ class Dish
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tags
+     */ 
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set the value of tags
+     *
+     * @return  self
+     */ 
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of galleryImage
+     */ 
+    public function getGalleryImage()
+    {
+        return $this->galleryImage;
+    }
+
+    /**
+     * Set the value of galleryImage
+     *
+     * @return  self
+     */ 
+    public function setGalleryImage($galleryImage)
+    {
+        $this->galleryImage = $galleryImage;
 
         return $this;
     }

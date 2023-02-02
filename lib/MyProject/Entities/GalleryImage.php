@@ -23,4 +23,44 @@ class GalleryImage
     #[ORM\Column(type: 'boolean')]
     private bool $isActive;
 
+
+    /**
+     * Get the value of imageURL
+     */ 
+    public function getImageURL()
+    {
+        return $this->imageURL;
+    }
+
+    /**
+     * Set the value of imageURL
+     *
+     * @return  self
+     */ 
+    public function setImageURL($imageURL)
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isActive
+     */ 
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set the value of isActive
+     *
+     * @return  self
+     */ 
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
 }

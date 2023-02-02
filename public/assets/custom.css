@@ -25,6 +25,15 @@
   color: white !important;
 }
 
+#url {
+  display: none;
+}
+
+.required:after {
+  content: " *";
+  color: red;
+}
+
 /*!
  * Bootstrap  v5.3.0-alpha1 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors

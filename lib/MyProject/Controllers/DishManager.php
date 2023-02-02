@@ -17,4 +17,10 @@ class DishManager {
     {
         require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDish.php');
     }
+
+    public function confirm()
+    {
+        require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDishConfirmation.php');
+    }
+
 }
