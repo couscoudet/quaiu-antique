@@ -2,7 +2,7 @@
 
 define("MYPROJECT_DIR", dirname(__DIR__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'MyProject');
 define("ASSETS", DIRECTORY_SEPARATOR.'assets');
-
+define("ROOTDIR", dirname(__DIR__));
 require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php'; 
 
 require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'routeList.php';
@@ -24,16 +24,16 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'head
 use MyProject\Route\Router;
 
 if (isset($_POST['url'])) {
-  $router = new Router($_POST['url']);
-  $router->post('/confirmer-plat', 'MyProject\Controller\DishManager@confirm');
-  $router->post('/upload', 'MyProject\Controller\DishManager@upload');
+  $router = new Router($_POST['url'], $entityManager);
+  $router->post('/confirmer-plat', 'MyProject\Controller\DishManager@confirm', false);
+  $router->post('/envoyer-plat', 'MyProject\Controller\DishManager@addDishToDB@data', true);
   $router->run();
 }
 else {
-  $router = new Router($_GET['url']);
-  $router->get('/', 'MyProject\Controller\DishManager@index');
-  $router->get('/plat/:id', 'MyProject\Controller\DishManager@show');
-  $router->get('/creer-plat', 'MyProject\Controller\DishManager@create');
+  $router = new Router($_GET['url'], $entityManager);
+  $router->get('/', 'MyProject\Controller\DishManager@index', false);
+  $router->get('/plat/:id', 'MyProject\Controller\DishManager@show', false);
+  $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', false);
   $router->run();
 }
 

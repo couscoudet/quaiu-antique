@@ -34,5 +34,8 @@ $bs-tertiary-bg: #4C061D;
     color: red ;
   }
 
+.hidden {
+    display: none;
+}
 
 @import "../../vendor/twbs/bootstrap/scss/bootstrap";

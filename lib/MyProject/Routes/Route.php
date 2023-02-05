@@ -6,11 +6,13 @@ class Route {
     public $path;
     public $controller;
     public $matches;
+    private $needEntityManager;
 
-    public function __construct($path, $controller)
+    public function __construct($path, $controller, $needEntityManager=false)
     {
         $this->path = trim($path, '/');
         $this->controller = $controller;
+        $this->needEntityManager = $needEntityManager;
     }
 
     public function matches($url)
@@ -27,13 +29,43 @@ class Route {
         }
     }
 
-    public function execute()
+    public function execute($em=null)
     {
         $params = explode('@',$this->controller);
         $controller = new $params[0]();
+        if (isset($em)){
+            $controller->setEm($em);
+        }
         $method = $params[1];
+        $postparam = isset($params[2]) ? $params[2] : null;
+        if (isset($this->matches[1])){
+           return $controller->$method($this->matches[1]);
+        } 
+        elseif ($postparam) {
+            return $controller->$method($_POST[$postparam]);
+        }
+        else {
+            $controller->$method();
+        }
+    }
 
-        return isset($this->matches[1]) ?  $controller->$method($this->matches[1]) : $controller->$method();
+    /**
+     * Get the value of needEntityManager
+     */ 
+    public function getNeedEntityManager()
+    {
+        return $this->needEntityManager;
+    }
 
+    /**
+     * Set the value of needEntityManager
+     *
+     * @return  self
+     */ 
+    public function setNeedEntityManager($needEntityManager)
+    {
+        $this->needEntityManager = $needEntityManager;
+
+        return $this;
     }
 }

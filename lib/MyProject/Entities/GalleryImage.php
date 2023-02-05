@@ -63,4 +63,12 @@ class GalleryImage
 
         return $this;
     }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id['uuid'];
+    }
 }

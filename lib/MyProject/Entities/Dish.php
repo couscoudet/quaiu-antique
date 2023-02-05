@@ -5,6 +5,7 @@ namespace MyProject\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
+use MyProject\Model\GalleryImage;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'dishes')]
@@ -150,12 +151,10 @@ class Dish
     /**
      * Set the value of galleryImage
      *
-     * @return  self
+     * 
      */ 
-    public function setGalleryImage($galleryImage)
+    public function setGalleryImage(GalleryImage $galleryImage)
     {
         $this->galleryImage = $galleryImage;
-
-        return $this;
     }
 }

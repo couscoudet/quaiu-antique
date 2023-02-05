@@ -8,8 +8,11 @@ class Router {
 
     public $routes=[];
 
-    public function __construct($url){
+    private $em;
+
+    public function __construct($url, $entityManager){
         $this->url = trim($url, '/');
+        $this->em = $entityManager;
     }
 
     public function show(){
@@ -20,14 +23,14 @@ class Router {
         $this->routes['GET'][] = new Route($path, $controller);
     }
 
-    public function post($path, $controller){
-        $this->routes['POST'][] = new Route($path, $controller);
+    public function post($path, $controller, $needEntityManager){
+        $this->routes['POST'][] = new Route($path, $controller, $needEntityManager);
     }
 
     public function run(){
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
            if ($route->matches($this->url)) {
-                $route->execute();
+                $route->getNeedEntityManager() ? $route->execute($this->em) : $route->execute();
            };
         }
         return header('HTTP/1.0 404 NOT FOUND');    
