@@ -36,14 +36,16 @@ class DishManager {
         $dish->setTitle($data['title']);
         $dish->setPrice($data['price']);
         $dish->setIsActive($data['isActive']);
-        if (isset($data['galleryImage'])) {
+        if (($data['galleryImage'])) {
             $galleryImage = new GalleryImage;
             $galleryImage->setImageURL($data['galleryImage']);
             $galleryImage->setIsActive(false);
             $dish->setGalleryImage($galleryImage);
         }
         $this->em->persist($dish);    
-        $this->em->persist($galleryImage);
+        if($data['galleryImage']) {
+            $this->em->persist($galleryImage);
+        }
         $this->em->flush();
         header("Location:/creer-plat");
         die();

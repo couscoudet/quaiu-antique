@@ -153,7 +153,7 @@ class Dish
      *
      * 
      */ 
-    public function setGalleryImage(GalleryImage $galleryImage)
+    public function setGalleryImage(GalleryImage|null $galleryImage)
     {
         $this->galleryImage = $galleryImage;
     }
