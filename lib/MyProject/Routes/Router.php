@@ -19,8 +19,8 @@ class Router {
         echo $this->url;
     }
 
-    public function get($path, $controller){
-        $this->routes['GET'][] = new Route($path, $controller);
+    public function get($path, $controller, $needEntityManager){
+        $this->routes['GET'][] = new Route($path, $controller, $needEntityManager);
     }
 
     public function post($path, $controller, $needEntityManager){

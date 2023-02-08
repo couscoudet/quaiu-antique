@@ -31,7 +31,7 @@ if (isset($_POST['url'])) {
 }
 else {
   $router = new Router($_GET['url'], $entityManager);
-  $router->get('/', 'MyProject\Controller\DishManager@index', false);
+  $router->get('/', 'MyProject\Controller\DishManager@index', true);
   $router->get('/plat/:id', 'MyProject\Controller\DishManager@show', false);
   $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', false);
   $router->run();

@@ -5,6 +5,9 @@ namespace MyProject\Controller;
 use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class DishManager {
 
@@ -12,7 +15,12 @@ class DishManager {
 
     public function index()
     {
-        echo 'liste des plats 2023';
+        $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+        $dishes = $dishRepository->findBy(['title'=>'Poulpe a la mout']);
+
+        foreach ($dishes as $dish) {
+        echo sprintf("-%s\n", $dish->getTitle());
+        };
     }
 
     public function show(int $id)

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
 use MyProject\Model\GalleryImage;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'dishes')]
@@ -33,16 +35,14 @@ class Dish
     #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tags;
 
-    public function __construct($value = array()) {
-        if (!empty($value)){
-            $this->hydrate($value);
-            $this->tags = new ArrayCollection();
-        }
+    public function __construct() {
+        $this->tags = new ArrayCollection();
+        $this->galleryImage = new GalleryImage();
     }
 
     #[ORM\OneToOne(targetEntity: GalleryImage::class)]
     #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id')]
-    private GalleryImage|null $galleryImage=null;
+    private GalleryImage|null $galleryImage = null;
 
     public function hydrate($data) {
         foreach($data as $attribute => $value){
