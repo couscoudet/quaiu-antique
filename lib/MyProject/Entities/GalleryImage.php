@@ -12,10 +12,9 @@ use Ramsey\Uuid\UuidInterface;
 class GalleryImage 
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "CUSTOM")]
-    #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private UuidInterface|string $id;
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
+    private int|null $id = null;
 
     #[ORM\Column(type: 'string')]
     private string $imageURL;

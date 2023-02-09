@@ -16,21 +16,44 @@ class DishManager {
     public function index()
     {
         $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
-        $dishes = $dishRepository->findBy(['title'=>'Poulpe a la mout']);
-
+        $dishes = $dishRepository->findAll();
+        ?>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-secondary" scope="col">Nom du plat</th>
+                    <th class="text-secondary" scope="col">Prix (€)</th>
+                    <th class="text-secondary" scope="col">Image</th>
+                    <th class="text-secondary" scope="col">A la carte ?</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php
+        $greenIcon = '<i style="color: green;" class="bi bi-bookmark-check"></i>';
+        $redIcon = '<i style="color: red;" class="bi bi-bookmark-x""></i>';
+        $linkIcon = '<i class="bi bi-pencil-square"></i>';
         foreach ($dishes as $dish) {
-        echo sprintf("-%s\n", $dish->getTitle());
-        };
+        echo '<tr>';
+        echo sprintf('<th scope="row">%s</th>', $dish->getTitle());
+        echo sprintf('<td>%s</td>', number_format($dish->getPrice(),2));
+        echo sprintf('<td><img src="%s" height="30px"></td>', $dish->getGalleryImage()->getImageURL());
+        echo sprintf('<td>%s</td>', ($dish->getIsActive() ? $greenIcon : $redIcon));
+        echo sprintf('<td><a href="/modify-dish/%s">%s</td></a>', $dish->getId(), $linkIcon);
+        echo '</tr>';
+        }
     }
 
-    public function show(int $id)
+    public function modify(string $id)
     {
-        echo 'je suis le plat '.$id;
+        $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+        $dish = $dishRepository->find($id);
+        echo $dish->getTitle();
+        require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'dishForm.php');
     }
 
     public function create()
     {
-        require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDish.php');
+        require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'dishForm.php');
     }
 
     public function confirm()

@@ -16,6 +16,7 @@ require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'rou
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<?= ASSETS.DIRECTORY_SEPARATOR.'custom.css'?>" rel="stylesheet">
     <title><?php $pageTitle ?></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
 <?php
@@ -34,6 +35,7 @@ else {
   $router->get('/', 'MyProject\Controller\DishManager@index', true);
   $router->get('/plat/:id', 'MyProject\Controller\DishManager@show', false);
   $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', false);
+  $router->get('/modify-dish/:id', 'MyProject\Controller\DishManager@modify', true);
   $router->run();
 }
 
