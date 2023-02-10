@@ -41,7 +41,7 @@ class Dish
     }
 
     #[ORM\OneToOne(targetEntity: GalleryImage::class)]
-    #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id', nullable: true)]
     private GalleryImage|null $galleryImage = null;
 
     public function hydrate($data) {

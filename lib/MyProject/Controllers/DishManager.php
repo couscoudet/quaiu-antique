@@ -36,7 +36,7 @@ class DishManager {
         echo '<tr>';
         echo sprintf('<th scope="row">%s</th>', $dish->getTitle());
         echo sprintf('<td>%s</td>', number_format($dish->getPrice(),2));
-        echo sprintf('<td><img src="%s" height="30px"></td>', $dish->getGalleryImage()->getImageURL());
+        echo sprintf('<td><img src="%s" height="30px"></td>', $dish->getGalleryImage() ? $dish->getGalleryImage()->getImageURL() : '');
         echo sprintf('<td>%s</td>', ($dish->getIsActive() ? $greenIcon : $redIcon));
         echo sprintf('<td><a href="/modify-dish/%s">%s</td></a>', $dish->getId(), $linkIcon);
         echo '</tr>';
@@ -71,6 +71,10 @@ class DishManager {
             $galleryImage = new GalleryImage;
             $galleryImage->setImageURL($data['galleryImage']);
             $galleryImage->setIsActive(false);
+            $dish->setGalleryImage($galleryImage);
+        }
+        else {
+            $galleryImage = null;
             $dish->setGalleryImage($galleryImage);
         }
         $this->em->persist($dish);    
