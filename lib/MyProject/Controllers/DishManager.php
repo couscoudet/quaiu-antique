@@ -16,7 +16,9 @@ class DishManager {
     public function index()
     {
         $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+        echo 'salut';
         $dishes = $dishRepository->findAll();
+        var_dump($dishes);
         ?>
         <table class="table">
             <thead class="thead-light">
