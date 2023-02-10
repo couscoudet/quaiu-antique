@@ -10,6 +10,7 @@ if ( ! is_dir($image_target_dir)) {
 }
 $image;
 $uploadOK = false;
+var_dump($_FILES);
 if(($_FILES["dishImage"]["name"])) {
     echo "j'ai une image !!<br>";
     $imageFileType = strtolower(pathinfo($_FILES["dishImage"]["name"],PATHINFO_EXTENSION));
@@ -20,6 +21,7 @@ if(($_FILES["dishImage"]["name"])) {
     }
     else {
         $uploadOk = true;
+        echo 'size OK';
     }
 
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
@@ -29,6 +31,7 @@ if(($_FILES["dishImage"]["name"])) {
     }
     else {
         $uploadOk = true;
+        echo 'type ok';
     }
     
     $check = getimagesize($_FILES["dishImage"]["tmp_name"]);
