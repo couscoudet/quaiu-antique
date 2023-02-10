@@ -11,34 +11,7 @@ if ($_ENV === []) {
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use Doctrine\ORM\Configuration;
-use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 
-$applicationMode = "development";
-
-if ($applicationMode == "development") {
-    $queryCache = new ArrayAdapter();
-    $metadataCache = new ArrayAdapter();
-} else {
-    $queryCache = new PhpFilesAdapter('doctrine_queries');
-    $metadataCache = new PhpFilesAdapter('doctrine_metadata');
-}
-
-$config = new Configuration;
-$config->setMetadataCache($metadataCache);
-$driverImpl = new AttributeDriver(['/lib/MyProject/Entities']);
-$config->setMetadataDriverImpl($driverImpl);
-$config->setQueryCache($queryCache);
-$config->setProxyDir('/lib/MyProject/Proxies');
-$config->setProxyNamespace('MyProject\Proxies');
-
-if ($applicationMode == "development") {
-    $config->setAutoGenerateProxyClasses(true);
-} else {
-    $config->setAutoGenerateProxyClasses(false);
-}
 
 $paths = [__DIR__ . '/lib/MyProject/Entities'];
 $isDevMode = false;
