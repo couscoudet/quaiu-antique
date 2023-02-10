@@ -2,3 +2,4 @@
 .env
 composer.phar
 /lib/MyProject/Migrations
+/lib/MyProject/Proxies
