@@ -38,4 +38,10 @@ $bs-tertiary-bg: #4C061D;
     display: none;
 }
 
+.table-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
 @import "../../vendor/twbs/bootstrap/scss/bootstrap";
