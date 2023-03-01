@@ -32,12 +32,16 @@ class User extends Visitor
 
     /** @var string */
     #[ORM\Column(type: 'string')]
-    private $email;
-
-    /** @var string */
-    #[ORM\Column(type: 'string')]
     private $password;
 
+    public function hydrate($data) {
+        foreach($data as $attribute => $value){
+            $method = 'set'.str_replace(' ', '', ucwords(str_replace('_','', $attribute)));
+            if (is_callable(array($this,$method))) {
+                $this->$method($value);
+            }
+        }
+    }
 
     /**
      * Get the value of id
@@ -108,26 +112,6 @@ class User extends Visitor
     }
 
     /**
-     * Get the value of email
-     */ 
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */ 
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
      * Get the value of password
      */ 
     public function getPassword()
@@ -142,7 +126,7 @@ class User extends Visitor
      */ 
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = password_hash($password,PASSWORD_BCRYPT);
 
         return $this;
     }

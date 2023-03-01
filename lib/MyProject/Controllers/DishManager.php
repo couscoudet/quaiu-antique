@@ -48,13 +48,19 @@ class DishManager {
         $viewmanager = new ViewManager;
         $viewmanager->render($view);    }
 
-    public function delete($dish)
+    public function delete(string $id)
     {
+        $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+        $dish = $dishRepository->find($id);
+        if ($dish->getGalleryImage()) {
+            $this->em->remove($dish->getGalleryImage());
+            unlink(ROOTDIR.'/public/'.$dish->getGalleryImage()->getImageURL());
+        }
         $this->em->remove($dish);
         $this->em->flush();
+    
         header("Location:/plats");
         die();
-
     }
 
     public function addDishToDB($data)

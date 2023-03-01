@@ -41,8 +41,8 @@ class Route {
         if (isset($this->matches[1])){
            return $controller->$method($this->matches[1]);
         } 
-        elseif ($postparam) {
-            return $controller->$method($_POST[$postparam]);
+        elseif ($postparam && isset($_POST[$postparam])) {
+                return $controller->$method($_POST[$postparam]);
         }
         else {
             $controller->$method();

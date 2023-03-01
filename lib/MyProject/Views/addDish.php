@@ -1,9 +1,5 @@
-<?php
-require_once 'header.php';
-?>
-
     <div class="article d-flex flex-column align-items-center">
-        <h2 class="h2 mb-5">Ajout/Modification d'un plat</h2>
+        <h2 class="h2 mb-5">Ajouter un plat</h2>
         <form method="POST" action="/confirmer-plat" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="dishTitle" class="form-label required">Nom du plat</label>
@@ -18,7 +14,7 @@ require_once 'header.php';
             <label class="form-check-label" for="activeDish">Présent sur la carte ?</label>
         </div>
         <div class="mb-3">
-            <label for="formFile" class="form-label">Ajouter une image (<5Mo)</label>
+            <label for="formFile" class="form-label">Ajouter une image (<1Mo)</label>
             <input class="form-control text-primary" type="file" id="dishImage" name="dishImage">
         </div>
             <input type="text" id="url" name="url" value="/confirmer-plat">
