@@ -21,6 +21,14 @@ class UserManager
         $this->em->flush();
     }
 
+    public function logUser(array|null $data=null)
+    {
+        if(!isset($_POST['data'])){
+            $viewManager = new ViewManager;
+            $viewManager->render('login.php');
+        }
+    }
+
     public function addUser(array|null $data=null)
     {
         if(!isset($_POST['data'])){

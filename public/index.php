@@ -17,6 +17,7 @@ if (isset($_POST['url'])) {
   $router->post('/envoyer-plat', 'MyProject\Controller\DishManager@addDishToDB@data', true);
   $router->post('/creer-utilisateur', 'MyProject\Controller\UserManager@addUser@data', true);
   $router->post('/creer-administrateur', 'MyProject\Controller\UserManager@addAdmin@data', true);
+  $router->post('/login', 'MyProject\Controller\UserManager@logUser@data', true);
   // $router->post('/envoyer-utilisateur', 'MyProject\Controller\DishManager@addDishToDB@data', true);
   $router->run();
 }
@@ -31,6 +32,7 @@ else {
   $router->get('/modify-dish/:id', 'MyProject\Controller\DishManager@modify', true);
   $router->get('/delete-dish/:id', 'MyProject\Controller\DishManager@delete', true);
   $router->get('/ajout-visiteur/:email', 'MyProject\Controller\UserManager@addVisitor', true);
+  $router->get('/login', 'MyProject\Controller\UserManager@logUser', false);
 
   $router->run();
 }
