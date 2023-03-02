@@ -25,14 +25,28 @@ class DishManager {
         die();
     }
 
-    public function modify(string $id)
+    public function modify($id=null)
     {
         $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
-        $dish = $dishRepository->find($id);
-        $data = [$dish];
-        $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'dishForm.php';
-        $viewmanager = new ViewManager;
-        $viewmanager->render($view, $data);
+        if(!isset($_POST['dishId'])) {
+            $dish = $dishRepository->find($id);
+            $data = [$dish];
+            $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'dishForm.php';
+            $viewmanager = new ViewManager;
+            $viewmanager->render($view, $data);
+        }
+        else {
+            $data = [
+                'id' => $_POST['dishId'],
+                'title' => $_POST['dishTitle'],
+                'price' => $_POST['dishPrice'],
+                'isActive' => isset($_POST['activeDish']) ? $_POST['activeDish'] : false
+            ];
+            $dish = $dishRepository->find($_POST['dishId']);
+            $dish->hydrate($data);
+            $this->em->flush();
+            header("Location:/plats");
+        }
     }
 
     public function create()
