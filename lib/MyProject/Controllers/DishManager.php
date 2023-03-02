@@ -45,6 +45,7 @@ class DishManager {
     public function confirm()
     {
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDishConfirmation.php';
+        var_dump($view);
         $viewmanager = new ViewManager;
         $viewmanager->render($view);    }
 

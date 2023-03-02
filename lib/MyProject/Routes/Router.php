@@ -32,8 +32,6 @@ class Router {
            if ($route->matches($this->url)) {
                 $route->getNeedEntityManager() ? $route->execute($this->em) : $route->execute();
            };
-        }
-        return header('HTTP/1.0 404 NOT FOUND');   
-        die(); 
+        } 
     }
 }

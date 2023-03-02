@@ -18,7 +18,7 @@
         echo '<tr>';
         echo sprintf('<th scope="row">%s</th>', $dish->getTitle());
         echo sprintf('<td>%s</td>', number_format($dish->getPrice(),2));
-        echo sprintf('<td><img class="table-image" src="%s"></td>', $dish->getGalleryImage() ? $dish->getGalleryImage()->getImageURL() : '');
+        echo sprintf('<td><img class="table-image" src="%s"></td>', $dish->getGalleryImage() ? $dish->getGalleryImage()->getImageURL() : ASSETS.DIRECTORY_SEPARATOR.'no-image.png');
         echo sprintf('<td>%s</td>', ($dish->getIsActive() ? $greenIcon : $redIcon));
         echo sprintf('<td><a href="/modify-dish/%s">%s</a><a href="/delete-dish/%s">%s</a></td>', $dish->getId(), $linkIcon,$dish->getId(), $binIcon);
         echo '</tr>';
