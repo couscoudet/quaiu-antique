@@ -5,9 +5,15 @@
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <div class="swiper-slide"> <img class="gallery-image" src="<?= ASSETS.DIRECTORY_SEPARATOR.'no-image.png' ?>"/></div>
-    <div class="swiper-slide" style="background:red;">Slide 2</div>
-    <div class="swiper-slide" style="background:green;">Slide 3</div>
+    <?php
+    foreach($data as $image) {
+      ?>
+
+    <div class="swiper-slide"> <img class="gallery-image" src="<?= $image->getImageURL() ?>"/></div>
+    
+    <?php
+    }
+    ?>
     ...
   </div>
   <!-- If we need pagination -->

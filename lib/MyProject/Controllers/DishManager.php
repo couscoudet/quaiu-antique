@@ -22,7 +22,6 @@ class DishManager {
         $viewmanager = new ViewManager;
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR."Views".DIRECTORY_SEPARATOR."dishListView.php";
         $viewmanager->render($view, $dishes);
-        die();
     }
 
     public function modify($id=null)
@@ -102,7 +101,45 @@ class DishManager {
         header("Location:/creer-plat");
         die();
     }
+
+    public function galleryManager()
+    {
+        $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
+        $images = $imageRepository->findAll();
+        $viewManager = new ViewManager;
+        $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'galleryManagerView.php';
+        $viewManager->render($view, $images);
+    }
     
+    public function removeImageFromGallery($id)
+    {
+        try
+        {
+            $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
+            $image = $imageRepository->find($id);
+            $image->setIsActive(false);
+            $this->em->flush();
+            echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-plus-square addToGallery"></i>';
+        }
+        catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function addImageToGallery($id)
+    {
+        try
+        {
+            $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
+            $image = $imageRepository->find($id);
+            $image->setIsActive(true);
+            $this->em->flush();
+            echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-dash-square removeFromGallery"></i>';
+        }
+        catch (Exception $e) {
+            echo $e;
+        }
+    }
 
 
     /**

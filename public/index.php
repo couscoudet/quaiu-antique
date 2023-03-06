@@ -24,7 +24,7 @@ if (isset($_POST['url'])) {
 }
 else {
   $router = new Router($_GET['url'], $entityManager);
-  $router->get('/', 'MyProject\Controller\MainManager@home', false);
+  $router->get('/', 'MyProject\Controller\MainManager@home', true);
   $router->get('/plats', 'MyProject\Controller\DishManager@index', true);
   $router->get('/plat/:id', 'MyProject\Controller\DishManager@show', false);
   $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', false);
@@ -34,7 +34,9 @@ else {
   $router->get('/delete-dish/:id', 'MyProject\Controller\DishManager@delete', true);
   $router->get('/ajout-visiteur/:email', 'MyProject\Controller\UserManager@addVisitor', true);
   $router->get('/login', 'MyProject\Controller\UserManager@logUser', false);
-
+  $router->get('/gerer-gallerie', 'MyProject\Controller\DishManager@galleryManager', true);
+  $router->get('/removeImageFromGallery/:id', 'MyProject\Controller\DishManager@removeImageFromGallery', true);
+  $router->get('/addImageToGallery/:id','MyProject\Controller\DishManager@addImageToGallery', true);
   $router->run();
 }
 ?>

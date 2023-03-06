@@ -68,6 +68,6 @@ class GalleryImage
      */ 
     public function getId()
     {
-        return $this->id['uuid'];
+        return $this->id;
     }
 }

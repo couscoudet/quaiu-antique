@@ -21,7 +21,7 @@
                 </ul>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link disabled"></a>
+                <a class="nav-link" href="/gerer-gallerie">Gérer gallerie</a>
                 </li>
             </ul>
 
