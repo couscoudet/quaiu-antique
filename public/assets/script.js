@@ -11,20 +11,27 @@ $(function(){
   })
 
   //Gallery Image Management
-  $('.removeFromGallery').click(function(e){
+  $('.gallery-manager').click(function(e){
     e.preventDefault();
-    let id = $(this).attr('id');
-    $(`#${id}`).hide();
-    $(`#${id}`).parent().load('/removeImageFromGallery/' + id);
+    if ($(this).children().hasClass('removeFromGallery')) {
+      let id = $(this).children().attr('id');
+      $(`#${id}`).hide();
+      $(`#${id}`).parent().load('/removeImageFromGallery/' + id);
+      }
+    else {
+      let id = $(this).children().attr('id');
+      $(`#${id}`).hide();
+      $(`#${id}`).parent().load('/addImageToGallery/' + id);
+      }
   })
 
-  $('.addToGallery').click(function(e){
-    e.preventDefault();
-    let id = $(this).attr('id');
-    console.log('hi');
-    $(`#${id}`).hide();
-    $(`#${id}`).parent().load('/addImageToGallery/' + id);
-  })
+  // $('.addToGallery').click(function(e){
+  //   e.preventDefault();
+  //   let id = $(this).attr('id');
+  //   console.log('hi');
+  //   $(`#${id}`).hide();
+  //   $(`#${id}`).parent().load('/addImageToGallery/' + id);
+  // })
   
 }); 
 
