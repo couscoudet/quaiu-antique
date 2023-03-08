@@ -2,8 +2,8 @@
 
 use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
-
-require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'/services/aws.php');
+echo'test';
+require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
 
 $image_target_dir = 'assets/dishImages';
 if ( ! is_dir($image_target_dir)) {
