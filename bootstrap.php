@@ -7,6 +7,9 @@ if ($_ENV === []) {
     require_once "dotenv.php";
 }
 
+
+//Amazon AWS Image Bucket
+
 //Doctrine connexion conf
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;

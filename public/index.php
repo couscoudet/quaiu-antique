@@ -8,7 +8,6 @@ require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php';
 
 require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'routeList.php';
 
-
 use MyProject\Route\Router;
 
 if (isset($_POST['url'])) {

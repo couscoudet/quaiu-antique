@@ -75,7 +75,7 @@ class Dish
      */ 
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = ucwords($title);
 
         return $this;
     }

@@ -3,6 +3,8 @@
 use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
 
+require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'/services/aws.php');
+
 $image_target_dir = 'assets/dishImages';
 if ( ! is_dir($image_target_dir)) {
     mkdir($image_target_dir);
@@ -11,7 +13,7 @@ $image;
 $uploadOK = false;
 if(($_FILES["dishImage"]["name"])) {
     $imageFileType = strtolower(pathinfo($_FILES["dishImage"]["name"],PATHINFO_EXTENSION));
-    $image = $image_target_dir . DIRECTORY_SEPARATOR . basename($_POST['dishTitle'] .'.'. $imageFileType);
+    $image = time()."_".str_replace(" ","-",strtolower(basename($_POST['dishTitle']) .'.'. $imageFileType));
 
     if ($_FILES["dishImage"]["size"] > 1000000) {
         echo '<div class="alert alert-danger"> Le fichier est trop volumineux, il doit faire moins de 1Mo.</div>';
@@ -45,11 +47,21 @@ if(($_FILES["dishImage"]["name"])) {
       // if everything is ok, try to upload file
     } 
     else {
-        if (move_uploaded_file($_FILES["dishImage"]["tmp_name"], $image)) {
-            echo "<div class=\"alert alert-success\">L'image ". htmlspecialchars( basename( $_FILES["dishImage"]["name"])). " a été chargée en tant que " . $image."</div>";
-        } else {
-            echo "Erreur de chargement.";
+        try {
+            $upload = $s3->putObject([
+                'Bucket'=> $bucket, 
+                'Key' => $image, 
+                'SourceFile' => $_FILES['dishImage']['tmp_name']
+            ]);
+            echo "<div class=\"alert alert-success\">L'image ". $image." a été chargée avec succès</div>";
+            var_dump($upload);
+            $imageURL = htmlspecialchars($upload->get('ObjectURL'));
         }
+        catch(Exception $e) {
+            echo 'probleme de téléchargement de l\'image';
+            print($e);
+        }
+
     }
 }
 
@@ -61,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     $data = [
-        'title' => isset($_POST['dishTitle']) ? $_POST['dishTitle'] : throw new error("pas de titre"),
+        'title' => isset($_POST['dishTitle']) ? ucwords($_POST['dishTitle']) : throw new error("pas de titre"),
         'price' => isset($_POST['dishPrice']) ? $_POST['dishPrice'] : throw new error("pas de prix"),
         'isActive' => (isset($_POST['activeDish']) && $_POST['activeDish']=='on') ? true : false,
         // 'tags' => isset($_POST['tags']) ? $_POST['tags'] : [],
-        'galleryImage' => ($_FILES['dishImage']['name']) ? $image : null,
+        'galleryImage' => ($_FILES['dishImage']['name']) ? $imageURL : null,
     ];
     
     
