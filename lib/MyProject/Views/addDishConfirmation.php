@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <script type="text/javascript">
-    const tmpUrl = <?= json_encode($image); ?>;
+    const tmpUrl = <?= json_encode($imageURL); ?>;
 </script>
 
 

@@ -67,14 +67,29 @@ class DishManager {
         $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
         $dish = $dishRepository->find($id);
         if ($dish->getGalleryImage()) {
+            require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
+            if (isset(explode('.com/',$dish->getGalleryImage()->getImageURL())[1])) {
+                $key = explode('.com/',$dish->getGalleryImage()->getImageURL())[1];
+                try {
+                    $result = $s3->deleteObject([
+                        'Bucket' => $bucket,
+                        'Key' => $key
+                    ]);
+                }
+                catch(S3Exception $e){
+                        exit("Erreur : " . $e->getAwsErrorMessage() . PHP_EOL);
+                }
+            }
             $this->em->remove($dish->getGalleryImage());
-            unlink(ROOTDIR.'/public/'.$dish->getGalleryImage()->getImageURL());
+            $this->em->remove($dish);
+            $this->em->flush();
+            header("Location:/plats");
         }
-        $this->em->remove($dish);
-        $this->em->flush();
-    
-        header("Location:/plats");
-        die();
+        else {
+            $this->em->remove($dish);
+            $this->em->flush();
+            header("Location:/plats");
+        }
     }
 
     public function addDishToDB($data)
