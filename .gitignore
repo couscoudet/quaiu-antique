@@ -1,6 +1,6 @@
 /vendor
 .env
 composer.phar
-/lib/MyProject/Migrations
+/lib/MyProject/Migrations/*
 /lib/MyProject/Proxies
 /public/assets/dishImages
