@@ -27,6 +27,30 @@ class UserManager
             $viewManager = new ViewManager;
             $viewManager->render('login.php');
         }
+        else {
+            $user = $this->find(($_POST['data']['email']));
+            if (!$user){
+                exit('<p>Cet utilisateur n\'existe pas</p><br>
+                      <a href="/login"> Revenir à la page de login</a>');
+            }
+            else {
+                if (password_verify(($_POST['data']['password']),$user->getPassword())) {
+                    session_start();
+                    $_SESSION["user"] = $user;
+                    header("Location: /");             
+                }
+                else {
+                    exit('<p>Mot de passe erroné</p><br>
+                      <a href="/login"> Revenir à la page de login</a>');
+                }
+            }
+        }
+    }
+
+    public function logOutUser() {
+        session_start();
+        $_SESSION = [];
+        header("Location: /");
     }
 
     public function addUser(array|null $data=null)
@@ -38,7 +62,6 @@ class UserManager
         else {
             $user = new User;
             $user->hydrate($data);
-            var_dump($user);
             $this->em->persist($user);
 
             $this->em->flush();
@@ -67,6 +90,18 @@ class UserManager
         $customer->hydrate($data);
         $this->em->persist($customer);
         $this->em->flush();
+    }
+
+    public function find($email) 
+    {
+        try {
+            $userRepository = $this->em->getRepository('MyProject\\Model\\User');
+            $user = $userRepository->findOneBy(['email' => $email]);
+            return ($user);
+        }
+        catch(Doctrine_Manager_Exception $e) {
+            exit('erreur : '. $e);
+        }
     }
 
     /**

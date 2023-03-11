@@ -9,6 +9,14 @@
             <label for="dishPrice" class="form-label required">Prix TTC</label>
             <input required type="number" step="0.01" class="form-control" id="dishPrice" name="dishPrice">
         </div>
+        <select required class="form-select required" name="category" aria-label="Default select example">
+            <option selected disabled value="">Sélectionner la categorie</option>
+            <?php
+            foreach($data as $category) {
+            ?>
+            <option value="<?= $category->getName() ?>"><?= $category->getName() ?></option>
+            <?php } ?>
+        </select>
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="activeDish" name="activeDish">
             <label class="form-check-label" for="activeDish">Présent sur la carte ?</label>

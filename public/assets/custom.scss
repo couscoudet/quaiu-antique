@@ -47,8 +47,8 @@ $bs-tertiary-bg: #4C061D;
 }
 
 .swiper {
-    width: 80vw;
-    height: 60Vh;
+    width: 700px;
+    height: 500px;
   }
 
 .gallery-image {
@@ -56,5 +56,12 @@ $bs-tertiary-bg: #4C061D;
     height: 100%;
     object-fit: cover;
 }
+
+@media screen and (max-width: 800px) {
+    .swiper {
+        width: 80vw;
+        height: 300px;
+    }
+  }
 
 @import "../../vendor/twbs/bootstrap/scss/bootstrap";

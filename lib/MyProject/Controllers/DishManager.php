@@ -4,6 +4,7 @@ namespace MyProject\Controller;
 
 use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
+use MyProject\Model\Category;
 use MyProject\View\ViewManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,7 +22,7 @@ class DishManager {
         $dishes = $dishRepository->findAll();
         $viewmanager = new ViewManager;
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR."Views".DIRECTORY_SEPARATOR."dishListView.php";
-        $viewmanager->render($view, $dishes);
+        $viewmanager->renderAdmin($view, $dishes);
     }
 
     public function modify($id=null)
@@ -32,7 +33,7 @@ class DishManager {
             $data = [$dish];
             $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'dishForm.php';
             $viewmanager = new ViewManager;
-            $viewmanager->render($view, $data);
+            $viewmanager->renderAdmin($view, $data);
         }
         else {
             $data = [
@@ -51,53 +52,64 @@ class DishManager {
     public function create()
     {
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDish.php';
-        $viewmanager = new ViewManager;
-        $viewmanager->render($view);
+        $viewManager = new ViewManager;
+        $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+        $categories = $categoryRepository->findAll();
+        $viewManager->renderAdmin($view, $categories);
     }
 
     public function confirm()
     {
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addDishConfirmation.php';
-        var_dump($view);
         $viewmanager = new ViewManager;
-        $viewmanager->render($view);    }
+        $viewmanager->renderAdmin($view);    }
 
     public function delete(string $id)
     {
-        $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
-        $dish = $dishRepository->find($id);
-        if ($dish->getGalleryImage()) {
-            require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
-            if (isset(explode('.com/',$dish->getGalleryImage()->getImageURL())[1])) {
-                $key = explode('.com/',$dish->getGalleryImage()->getImageURL())[1];
-                try {
-                    $result = $s3->deleteObject([
-                        'Bucket' => $bucket,
-                        'Key' => $key
-                    ]);
+        session_start();
+        if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') {
+            $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+            $dish = $dishRepository->find($id);
+            if ($dish->getGalleryImage()) {
+                require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
+                if (isset(explode('.com/',$dish->getGalleryImage()->getImageURL())[1])) {
+                    $key = explode('.com/',$dish->getGalleryImage()->getImageURL())[1];
+                    try {
+                        $result = $s3->deleteObject([
+                            'Bucket' => $bucket,
+                            'Key' => $key
+                        ]);
+                    }
+                    catch(S3Exception $e){
+                            exit("Erreur : " . $e->getAwsErrorMessage() . PHP_EOL);
+                    }
                 }
-                catch(S3Exception $e){
-                        exit("Erreur : " . $e->getAwsErrorMessage() . PHP_EOL);
-                }
+                $this->em->remove($dish->getGalleryImage());
+                $this->em->remove($dish);
+                $this->em->flush();
+                header("Location:/plats");
             }
-            $this->em->remove($dish->getGalleryImage());
-            $this->em->remove($dish);
-            $this->em->flush();
-            header("Location:/plats");
+            else {
+                $this->em->remove($dish);
+                $this->em->flush();
+                header("Location:/plats");
+            }
         }
         else {
-            $this->em->remove($dish);
-            $this->em->flush();
-            header("Location:/plats");
+            exit('Vous n\'êtes pas autorisé à consulter cette page<br>
+                <a href="/">Retourner à l\'accueil</a>');
         }
     }
 
     public function addDishToDB($data)
     {
         $dish = new Dish();
+        $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+        $category = $categoryRepository->findOneBy(['name' => $data['category']]);
         $dish->setTitle($data['title']);
         $dish->setPrice($data['price']);
         $dish->setIsActive($data['isActive']);
+        $dish->setCategory($category);
         if (($data['galleryImage'])) {
             $galleryImage = new GalleryImage;
             $galleryImage->setImageURL($data['galleryImage']);
@@ -123,7 +135,7 @@ class DishManager {
         $images = $imageRepository->findAll();
         $viewManager = new ViewManager;
         $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'galleryManagerView.php';
-        $viewManager->render($view, $images);
+        $viewManager->renderAdmin($view, $images);
     }
     
     public function removeImageFromGallery($id)
@@ -153,6 +165,31 @@ class DishManager {
         }
         catch (Exception $e) {
             echo $e;
+        }
+    }
+
+    public function displayCard() {
+        $viewManager = new ViewManager;
+        $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'displayCard.php';
+        $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
+        $dishes = $dishRepository->findBy(['isActive' => true]);
+        $viewManager->render($view, $dishes);
+    }
+
+    public function addCategory() {
+        if (isset($_POST['category'])) {
+            $category = new Category;
+            $category->setName($_POST['category']);
+            $this->em->persist($category);
+            $this->em->flush();
+            header("Location: /ajouter-categorie");
+        }
+        else {
+            $viewManager = new ViewManager;
+            $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addCategory.php';
+            $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+            $categories = $categoryRepository->findAll();
+            $viewManager->render($view,$categories);
         }
     }
 

@@ -44,6 +44,10 @@ class Dish
     #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id', nullable: true)]
     private GalleryImage|null $galleryImage = null;
 
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
+    private Category|null $category = null;
+
     public function hydrate($data) {
         foreach($data as $attribute => $value){
             $method = 'set'.str_replace(' ', '', ucwords(str_replace('_','', $attribute)));
@@ -156,5 +160,25 @@ class Dish
     public function setGalleryImage(GalleryImage|null $galleryImage)
     {
         $this->galleryImage = $galleryImage;
+    }
+
+    /**
+     * Get the value of category
+     */ 
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the value of category
+     *
+     * @return  self
+     */ 
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }
