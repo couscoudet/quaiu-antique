@@ -1,29 +1,53 @@
 
-    
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
             <a class="navbar-brand" href="/"><img src="<?= ASSETS.DIRECTORY_SEPARATOR.'logo.png' ?>" alt="logo quai antique" width="100px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+            <ul class="navbar-nav me-auto mb-2 ms-5 mb-lg-0">
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/plats" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Plats
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/plats">Liste des plats</a></li>
-                    <li><a class="dropdown-item" href="/creer-plat">Créer un plat</a></li>
-                    <!-- <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                </ul>
+                    <a class="nav-link dropdown-toggle" href="/plats" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Découvrir
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/nos-menus">Nos menus</a></li>
+                        <li><a class="dropdown-item" href="/a-la-carte">A la carte</a></li>
+                        <!-- <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                    </ul>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/gerer-gallerie">Gérer gallerie</a>
+                <?php
+                if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') 
+                {
+                ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/plats" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/plats">Liste des plats</a></li>
+                        <li><a class="dropdown-item" href="/creer-plat">Créer un plat</a></li>
+                        <li><a class="dropdown-item" href="/gerer-gallerie">Gérer gallerie</a></li>
+                        <li><a class="dropdown-item" href="/ajouter-categorie">Categories</a></li>
+                        <!-- <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                    </ul>
                 </li>
+                <?php } ?>
             </ul>
+            <?php
+            if (!isset($_SESSION['user'])) 
+            {
+                ?>
+                <a href="/login"><i style="font-size:2rem;" class="bi bi-person"></i></a>
+            <?php
+                }
+                else { ?>
+                <a href="/logout"><i style="font-size:2rem;" class="bi bi-box-arrow-right"></i></a>
+            <?php
+                } ?>
 
             </div>
         </div>

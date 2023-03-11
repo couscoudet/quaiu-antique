@@ -2,7 +2,7 @@
 
 use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
-echo'test';
+
 require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
 
 $image_target_dir = 'assets/dishImages';
@@ -54,7 +54,6 @@ if(($_FILES["dishImage"]["name"])) {
                 'SourceFile' => $_FILES['dishImage']['tmp_name']
             ]);
             echo "<div class=\"alert alert-success\">L'image ". $image." a été chargée avec succès</div>";
-            var_dump($upload);
             $imageURL = htmlspecialchars($upload->get('ObjectURL'));
         }
         catch(Exception $e) {
@@ -78,12 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'isActive' => (isset($_POST['activeDish']) && $_POST['activeDish']=='on') ? true : false,
         // 'tags' => isset($_POST['tags']) ? $_POST['tags'] : [],
         'galleryImage' => ($_FILES['dishImage']['name']) ? $imageURL : null,
+        'category' => isset($_POST['category']) ? $_POST['category'] : throw new error("pas de categorie")
     ];
     
     
     echo '<ul class="list-group">';
     echo '<li class="list-group-item"><span class="text-secondary bg-primary m-5">Titre: </span> '.$data['title'].'</li>';
     echo '<li class="list-group-item"><span class="text-secondary bg-primary  m-5">Prix: </span> '.$data['price'].' €</li>';
+    echo '<li class="list-group-item"><span class="text-secondary bg-primary  m-5">Catégorie: </span> '.$data['category'].'</li>';
     echo $data['isActive'] ? '<li class="list-group-item"><span class="text-secondary bg-primary m-5">Visible sur la carte ?</span> oui' : '<li class="list-group-item"><span class="text-secondary bg-primary m-5">Visible sur la carte ?</span> non';
     // echo '<p>'.$dish->getTags().'</p>';
     echo '</ul>';

@@ -18,6 +18,8 @@ if (isset($_POST['url'])) {
   $router->post('/creer-administrateur', 'MyProject\Controller\UserManager@addAdmin@data', true);
   $router->post('/login', 'MyProject\Controller\UserManager@logUser@data', true);
   $router->post('/modifier-plat', 'MyProject\Controller\DishManager@modify', true);
+  $router->post('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory@category', true);
+
   // $router->post('/envoyer-utilisateur', 'MyProject\Controller\DishManager@addDishToDB@data', true);
   $router->run();
 }
@@ -26,7 +28,7 @@ else {
   $router->get('/', 'MyProject\Controller\MainManager@home', true);
   $router->get('/plats', 'MyProject\Controller\DishManager@index', true);
   $router->get('/plat/:id', 'MyProject\Controller\DishManager@show', false);
-  $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', false);
+  $router->get('/creer-plat', 'MyProject\Controller\DishManager@create', true);
   $router->get('/creer-utilisateur', 'MyProject\Controller\UserManager@addUser', true);
   $router->get('/creer-administrateur', 'MyProject\Controller\UserManager@addAdmin', true);
   $router->get('/modifier-plat/:id', 'MyProject\Controller\DishManager@modify', true);
@@ -36,6 +38,11 @@ else {
   $router->get('/gerer-gallerie', 'MyProject\Controller\DishManager@galleryManager', true);
   $router->get('/removeImageFromGallery/:id', 'MyProject\Controller\DishManager@removeImageFromGallery', true);
   $router->get('/addImageToGallery/:id','MyProject\Controller\DishManager@addImageToGallery', true);
+  $router->get('/logout', 'MyProject\Controller\UserManager@logOutUser', false);
+  $router->get('/a-la-carte', 'MyProject\Controller\DishManager@displayCard', true);
+  $router->get('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory', true);
+
+
   $router->run();
 }
 ?>

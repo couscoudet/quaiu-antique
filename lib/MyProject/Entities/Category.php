@@ -20,9 +20,6 @@ class Category
     #[ORM\Column(type: 'string')]
     private string $name;
 
-    #[ORM\ManyToOne(targetEntity: Dish::class)]
-    #[ORM\JoinColumn(name: 'dish_id', referencedColumnName: 'id')]
-    private Dish $dish;
 
     /**
      * Get the value of id

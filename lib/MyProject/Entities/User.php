@@ -34,6 +34,8 @@ class User extends Visitor
     #[ORM\Column(type: 'string')]
     private $password;
 
+    protected $role = 'user';
+
     public function hydrate($data) {
         foreach($data as $attribute => $value){
             $method = 'set'.str_replace(' ', '', ucwords(str_replace('_','', $attribute)));
@@ -127,6 +129,26 @@ class User extends Visitor
     public function setPassword($password)
     {
         $this->password = password_hash($password,PASSWORD_BCRYPT);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of role
+     */ 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set the value of role
+     *
+     * @return  self
+     */     
+    public function setRole($role)
+    {
+        $this->role = $role;
 
         return $this;
     }
