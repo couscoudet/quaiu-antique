@@ -1,8 +1,7 @@
 
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg align-items-start">
+            <div class="container-fluid col-10">
             <a class="navbar-brand" href="/"><img src="<?= ASSETS.DIRECTORY_SEPARATOR.'logo.png' ?>" alt="logo quai antique" width="100px"></a>
-            <div class="d-flex align-items-center">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,18 +38,19 @@
                 <?php } ?>
             </ul>
             </div>
-            <?php
+        </div>
+        <div class="col-2 d-flex align-items-center" style="height: 70px">
+        <?php
             if (!isset($_SESSION['user'])) 
             {
                 ?>
-                <a class="ms-2" href="/login"><i style="font-size:2rem;" class="bi bi-person"></i></a>
+                <a class="" href="/login"><i style="font-size:2rem;" class="bi bi-person"></i></a>
             <?php
                 }
                 else { ?>
-                <a class="ms-3" href="/logout"><i style="font-size:2rem;" class="bi bi-box-arrow-right"></i></a>
+                <a class="" href="/logout"><i style="font-size:2rem;" class="bi bi-box-arrow-right"></i></a>
             <?php
                 } ?>
-            </div>
         </div>
     </nav>
 
