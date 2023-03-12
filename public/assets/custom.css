@@ -5,10 +5,17 @@
   color: #4C061D;
   font-family: "Play", sans-serif;
   --bs-border-color: #16BAC5;
+  --bs-body-color:#4C061D;
+  --bs-navbar-toggler-border-color: #16BAC5;
+  font-size: 1.2rem;
 }
 
 .navbar * {
   color: #16BAC5 !important;
+}
+
+.navbar-toggler-icon {
+  font-size: 0.8rem;
 }
 
 .h1, .h2, .h3, .h4 {
@@ -51,6 +58,14 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.secondary-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(22,186,197, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.secondary-toggler.navbar-toggler {
+  border-color: #16BAC5;
 }
 
 @media screen and (max-width: 800px) {

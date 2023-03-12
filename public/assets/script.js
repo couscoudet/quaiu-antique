@@ -46,6 +46,9 @@ const swiper = new Swiper('.swiper', {
   pagination: {
     el: '.swiper-pagination',
   },
+  keyboard: {
+    enabled: true,
+  },
 
   // Navigation arrows
   navigation: {
