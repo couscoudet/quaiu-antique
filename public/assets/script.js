@@ -6,9 +6,24 @@ $(function(){
     e.preventDefault();
     console.log(document.URL);
     $('#main').load('../assets/removeImage.php', {'url': tmpUrl});
-    // setTimeout(() => location.href = "/creer-plat", 500);
-
   })
+
+  //remove meal
+  let mealToDelete;
+  $('.meal-bin').click(function(e){
+    e.preventDefault();
+    mealToDelete = e.target.id;
+    // $('#main').load('../assets/removeImage.php', {'url': tmpUrl});
+    // setTimeout(() => location.href = "/creer-plat", 500);
+    let link = '/delete-meal/' + mealToDelete;
+    $('#delete-meal').attr('href',link);
+  })
+
+  $('#cancel-meal').click(function(e){
+    e.preventDefault();
+    $('#delete-meal').attr('href','');
+  })
+  
 
   //Gallery Image Management
   $('.gallery-manager').click(function(e){

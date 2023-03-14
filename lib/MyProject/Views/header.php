@@ -31,6 +31,8 @@
                         <li><a class="dropdown-item" href="/creer-plat">Créer un plat</a></li>
                         <li><a class="dropdown-item" href="/gerer-gallerie">Gérer gallerie</a></li>
                         <li><a class="dropdown-item" href="/ajouter-categorie">Categories</a></li>
+                        <li><a class="dropdown-item" href="/ajouter-menu">Créer Menus</a></li>
+                        <li><a class="dropdown-item" href="/liste-menus">Liste des menus</a></li>
                         <!-- <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                     </ul>

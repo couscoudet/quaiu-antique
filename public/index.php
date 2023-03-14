@@ -5,7 +5,7 @@ define("ASSETS", DIRECTORY_SEPARATOR.'assets');
 define("ROOTDIR", dirname(__DIR__));
 define("PUBLIC_DIR", __DIR__);
 require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'bootstrap.php'; 
-
+define("EM", $entityManager);
 require_once MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Routes'.DIRECTORY_SEPARATOR.'routeList.php';
 
 use MyProject\Route\Router;
@@ -19,7 +19,7 @@ if (isset($_POST['url'])) {
   $router->post('/login', 'MyProject\Controller\UserManager@logUser@data', true);
   $router->post('/modifier-plat', 'MyProject\Controller\DishManager@modify', true);
   $router->post('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory@category', true);
-
+  $router->post('/ajouter-menu','MyProject\Controller\MealManager@createMeal@data', true);
   // $router->post('/envoyer-utilisateur', 'MyProject\Controller\DishManager@addDishToDB@data', true);
   $router->run();
 }
@@ -41,8 +41,9 @@ else {
   $router->get('/logout', 'MyProject\Controller\UserManager@logOutUser', false);
   $router->get('/a-la-carte', 'MyProject\Controller\DishManager@displayCard', true);
   $router->get('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory', true);
-
-
+  $router->get('/ajouter-menu','MyProject\Controller\MealManager@createMeal', true);
+  $router->get('/liste-menus','MyProject\Controller\MealManager@MealsList', true);
+  $router->get('/delete-meal/:mealId', 'MyProject\Controller\MealManager@deleteMeal', true);
   $router->run();
 }
 ?>

@@ -7,15 +7,12 @@
   --bs-border-color: #16BAC5;
   --bs-body-color:#4C061D;
   --bs-navbar-toggler-border-color: #16BAC5;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .navbar * {
   color: #16BAC5 !important;
-}
-
-.navbar-toggler-icon {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
 }
 
 .h1, .h2, .h3, .h4 {

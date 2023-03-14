@@ -14,16 +14,15 @@ $bs-tertiary-bg: #4C061D;
     --bs-border-color: #16BAC5;
     --bs-body-color:#4C061D;
     --bs-navbar-toggler-border-color: #16BAC5;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .navbar * {
     color: $secondary !important;
+    font-size: 1.2rem;
 }
 
-.navbar-toggler-icon {
-    font-size: 0.8rem;
-}
+
 
 .h1, .h2, .h3, .h4 {
     font-family: 'DM Serif Display', serif;
