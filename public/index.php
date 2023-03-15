@@ -20,7 +20,7 @@ if (isset($_POST['url'])) {
   $router->post('/modifier-plat', 'MyProject\Controller\DishManager@modify', true);
   $router->post('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory@category', true);
   $router->post('/ajouter-menu','MyProject\Controller\MealManager@createMeal@data', true);
-  // $router->post('/envoyer-utilisateur', 'MyProject\Controller\DishManager@addDishToDB@data', true);
+  $router->post('/creer-plage-annee', 'MyProject\Controller\BookManager@addAvailabilityForYear@data', true);
   $router->run();
 }
 else {
@@ -44,6 +44,7 @@ else {
   $router->get('/ajouter-menu','MyProject\Controller\MealManager@createMeal', true);
   $router->get('/liste-menus','MyProject\Controller\MealManager@MealsList', true);
   $router->get('/delete-meal/:mealId', 'MyProject\Controller\MealManager@deleteMeal', true);
+  $router->get('/creer-plage-annee', 'MyProject\Controller\BookManager@addAvailabilityForYear@data', true);
   $router->run();
 }
 ?>

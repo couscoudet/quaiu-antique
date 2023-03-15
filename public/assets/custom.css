@@ -65,6 +65,10 @@
   border-color: #16BAC5;
 }
 
+.day input {
+  width: 100px !important;
+}
+
 @media screen and (max-width: 800px) {
   .swiper {
     width: 80vw;
