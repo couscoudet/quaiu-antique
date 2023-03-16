@@ -47,8 +47,112 @@ $(function(){
   //   $(`#${id}`).hide();
   //   $(`#${id}`).parent().load('/addImageToGallery/' + id);
   // })
+
+  //Time Slot Dynamic management
+  /////////////////////////////////////////////////////////////////////////////////////////
+  let slotId = 1;
+  const createSlot = (day,slotId) => {
+    return $(`<div id="slot-${slotId}"class="slot d-flex flex-wrap align-items-center justify-content-center">\
+                <div class="slotTimes d-flex">\
+                    <div class="m-2">\
+                        <label for="startSlot" class="form-label required">Heure de début</label>\
+                        <input required type="time" class="form-control" id="startSlot" name="data[days][${day}][slots][${slotId}][startDateTime]">\
+                    </div>\
+                    <div class="m-2">\
+                        <label for="startSlot" class="form-label required">Heure de fin</label>\
+                        <input required type="time" class="form-control" id="startSlot" name="data[days][${day}][slots][${slotId}][endDateTime]">\
+                    </div>\
+                </div>\
+                <i type="button" class="bi bi-trash3 m-3 timeslot-delete"></i>\
+              </div>`)
+  }
+
+  $('.add-slot').click((e)=>{
+    e.preventDefault();
+    console.log($(e.target).parent().attr('id'));
+    let newSlot = createSlot($(e.target).parent().attr('id'),slotId);
+    $(e.target).parent().append(newSlot);
+    slotId++;
+    $('.timeslot-delete').click((e)=>{
+      e.preventDefault();
+      $(e.target).parent().remove();
+    });
+  });
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //Booking management
+  console.log(dates);
+  let d = new Date(2023, 0, 18);
+
+  $( "#date" ).datepicker({
+    altField: "date",
+    closeText: 'Fermer',
+    prevText: 'Précédent',
+    nextText: 'Suivant',
+    currentText: 'Aujourd\'hui',
+    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    weekHeader: 'Sem.',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    beforeShowDay: function(d) {
+      d = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`
+      if($.inArray(d,dates) != -1) {
+        return[true,""]
+        }
+      else {
+        return[false,"" ,"non disponible"]
+      }
+    }
+  });
+
+  let data = {
+    'peopleNumber': 0,
+    'date' : ''
+  }
+
+  $("#peopleNumberBook").change((e) => {
+    $('#date-block').removeClass('hidden');
+  })
+
+  const takeSlotId = () => {
+    const slots = document.getElementsByClassName('time-slot');
+    console.log(slots);
+    for (let slot of slots) {
+      console.log(slot)
+      slot.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('ok');
+        $('#slot-input').val($(e.target).attr('id'));
+        $('.time-slot').removeClass('btn-primary');
+        $('.time-slot').addClass('btn-outline-primary');
+        $(`#${$('#slot-input').val()}`).toggleClass('btn-primary btn-outline-primary');
+        $('button').removeClass('hidden');
+      });
+    }
+  }
   
-}); 
+  $( "#date" ).change((e) => {
+    e.preventDefault();
+    data['peopleNumber'] = $('#peopleNumberBook').val();
+    data['date'] = $( "#date" ).val();
+    $('#timeToBook').remove();
+    $(e.target).after('<div id="timeToBook"></div>')
+    $('#timeToBook').load('/checkavailabilities', {'data': data, 'url':'/checkavailabilities'});
+    setTimeout(takeSlotId,500);
+  });
+
+
+
+});
+
+ 
+
+
 
 
 //swiper for Homepage

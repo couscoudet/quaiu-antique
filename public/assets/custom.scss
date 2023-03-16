@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('jquery-ui-1.13.2.custom/jquery-ui.css');
 
 $body-bg: #FFF1E8;
 $primary: #4C061D;
+$primary-tr: #4c061d25;
 $secondary: #16BAC5;
 $bs-tertiary-bg: #4C061D;
 
@@ -44,13 +46,17 @@ $bs-tertiary-bg: #4C061D;
   }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .table-image {
     width: 70px;
     height: 70px;
     object-fit: cover;
+}
+
+.btn-secondary{
+    color: white !important;
 }
 
 .swiper {
@@ -74,6 +80,15 @@ border-color: $secondary;
 
 .day input {
     width: 100px !important;
+}
+
+.day {
+    border: solid $primary-tr 1px;
+    border-radius: 20px;
+}
+
+.ui-datepicker-month, .ui-datepicker-year {
+    color:#16BAC5;
 }
 
 @media screen and (max-width: 800px) {

@@ -33,6 +33,7 @@
                         <li><a class="dropdown-item" href="/ajouter-categorie">Categories</a></li>
                         <li><a class="dropdown-item" href="/ajouter-menu">Créer Menus</a></li>
                         <li><a class="dropdown-item" href="/liste-menus">Liste des menus</a></li>
+                        <li><a class="dropdown-item" href="/creer-plage-annee">Créer créneaux année</a></li>
                         <!-- <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                     </ul>
@@ -41,6 +42,7 @@
             </ul>
             </div>
         </div>
+        <a class="btn btn-secondary m-3" href="/reserver" role="button">Réserver</a>
         <div class="col-2 d-flex align-items-center" style="height: 70px">
         <?php
             if (!isset($_SESSION['user'])) 

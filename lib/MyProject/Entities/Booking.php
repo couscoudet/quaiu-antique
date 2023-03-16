@@ -20,10 +20,6 @@ class Booking
     /** @var string */
     #[ORM\Column(type: 'string')]
     private string $title;
-
-    /** @var DateTime */
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $slot;
     
     /** @var int */
     #[ORM\Column(type: 'integer')]
@@ -31,11 +27,11 @@ class Booking
 
     /** @var string */
     #[ORM\Column(type: 'string')]
-    private string $allergies;
+    private string $allergies = '';
 
     /** @var string */
     #[ORM\Column(type: 'string')]
-    private string $infos;
+    private string $infos = '';
 
     /** @var Visitor */
     #[ORM\ManyToOne(targetEntity: Visitor::class)]
@@ -47,25 +43,7 @@ class Booking
     #[ORM\JoinColumn(name: 'booked_on_id', referencedColumnName: 'id')]
     private Availability $availability;
 
-    /**
-     * Get the value of slot
-     */ 
-    public function getSlot()
-    {
-        return $this->slot;
-    }
 
-    /**
-     * Set the value of slot
-     *
-     * @return  self
-     */ 
-    public function setSlot($slot)
-    {
-        $this->slot = $slot;
-
-        return $this;
-    }
 
     /**
      * Get the value of id
@@ -151,6 +129,26 @@ class Booking
     public function setVisitor(Visitor $visitor)
     {
         $this->visitor = $visitor;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of availability
+     */ 
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    /**
+     * Set the value of availability
+     *
+     * @return  self
+     */ 
+    public function setAvailability($availability)
+    {
+        $this->availability = $availability;
 
         return $this;
     }

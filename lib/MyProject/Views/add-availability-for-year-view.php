@@ -15,25 +15,12 @@
         <div class="days flex-wrap d-flex justify-content-center">
         <?php 
         $days=['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']; 
-        foreach($days as $day) :
+        foreach($days as $index => $day) :
         ?>
 
-        <div class="day d-flex flex-column m-4 ">
+        <div class="day d-flex flex-column m-4 p-2" id="<?= $index+1 ?>" >
             <h4 class="h4"><?= $day ?></h4>
-            <div><button type="button" role="button" class="btn btn-secondary">Ajouter plage</button></div>
-            <div class="slot d-flex flex-wrap align-items-center justify-content-center">
-                <div class="slotTimes d-flex">
-                    <div class="m-2">
-                        <label for="startSlot" class="form-label required">Heure de début</label>
-                        <input required type="time" class="form-control" id="startSlot" name="data[days][<?=$day;?>][slots][startSlot]">
-                    </div>
-                    <div class="m-2">
-                        <label for="startSlot" class="form-label required">Heure de fin</label>
-                        <input required type="time" class="form-control" id="startSlot" name="data[days][<?=$day;?>][slots][endSlot]">
-                    </div>
-                </div>
-                <i type="button" class="bi bi-trash3 m-3 meal-bin"></i>
-            </div>
+            <button type="button" role="button" class="btn btn-secondary add-slot">Ajouter plage</button>
         </div>
 
         <?php
@@ -41,6 +28,7 @@
         ?>
         </div>
 
-        <button type="submit" class="btn btn-secondary">Valider</button>
+        <input type="text" id="url" name="url" value="/creer-plage-annee">
+        <button type="submit" class="btn btn-primary btn-lg">Valider</button>
         </form>
     </div>
