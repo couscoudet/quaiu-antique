@@ -13,20 +13,21 @@
     foreach($categories as $category) :
     ?>
     <h4 class="h4 m-3"><?=$category?><h4>
-        <div class="d-flex justify-content-between" style="width:350px;">
             <?php foreach($data as $dish):
             if ($dish->getCategory()) :
                 if($dish->getCategory()->getName() === $category) :
-            ?>
+            ?>        
+            <div class="d-flex justify-content-between" style="width:350px;">
                 <div class="m-2">
                     <p><?= $dish->getTitle() ?></p>
                 </div>
                 <div class="m-2">
                     <p><?= $dish->getPrice() ?> €</p>
                 </div>
+            </div>
                 <?php endif;
             endif;
             endforeach; ?>
-        </div>
+        
     <?php endforeach ?>
 </div>
