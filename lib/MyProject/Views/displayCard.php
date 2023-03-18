@@ -5,9 +5,9 @@
     $categories=[];
     foreach( $data as $dish) {
         if($dish->getCategory()) {
-            // if (!in_array($dish->getCategory()->getName(),$categories)){
+            if (!in_array($dish->getCategory()->getName(),$categories)){
                 array_splice($categories,$dish->getCategory()->getCatOrder(),0, $dish->getCategory()->getName());
-            // }
+            }
             }
     }
     foreach($categories as $category) :
