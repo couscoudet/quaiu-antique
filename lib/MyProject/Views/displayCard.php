@@ -1,4 +1,4 @@
-<h2 class="h2 mb-5">Notre Carte</h2>
+<h2 class="h2 mb-5">A la Carte</h2>
 <div class="d-flex flex-column align-items-center">
     
     <?php

@@ -2,6 +2,7 @@
 
 namespace MyProject\Controller;
 use MyProject\Model\Meal;
+use MyProject\Model\Arrangement;
 use MyProject\View\ViewManager;
 use Doctrine\ORM\EntityManager;
 
@@ -30,6 +31,14 @@ class MealManager
                 if (isset($dish)) {
                     $meal->addDish($dish);
                 }
+            }
+            foreach ($data['arrangement'] as $mealArrangement) {
+                $arrangement = new Arrangement($this->em);
+                $arrangement->setTitle($mealArrangement['title']);
+                $arrangement->setDescription($mealArrangement['description']);
+                $arrangement->setPrice($mealArrangement['price']);
+                $arrangement->setMeal($meal);
+                $this->em->persist($arrangement);
             }
             try {
                 $meal->save();
@@ -69,6 +78,22 @@ class MealManager
         }
         else {
             header('Location: /');
+        }
+    }
+
+    public function displayMeal() {
+        $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'display-meals-view.php';
+        try {
+            $mealRepository = $this->em->getRepository('MyProject\\Model\\Meal');
+            $meals = $mealRepository->findAll();
+            $arrangementRepository = $this->em->getRepository('MyProject\\Model\\Arrangement');
+            $arrangements = $arrangementRepository->findAll();
+            $data = ['meals' => $meals, 'arrangements' =>  $arrangements];
+            $viewManager = new ViewManager;
+            $viewManager->renderAdmin($view,$data);
+        }
+        catch(Exception $e){
+            exit($e);
         }
     }
 

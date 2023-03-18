@@ -49,6 +49,7 @@ else {
   $router->get('/delete-meal/:mealId', 'MyProject\Controller\MealManager@deleteMeal', true);
   $router->get('/creer-plage-annee', 'MyProject\Controller\BookManager@addAvailabilityForYear@data', true);
   $router->get('/reserver', 'MyProject\Controller\BookManager@book@data', true);
+  $router->get('/nos-menus', 'MyProject\Controller\MealManager@displayMeal', true);
   $router->run();
 }
 ?>
