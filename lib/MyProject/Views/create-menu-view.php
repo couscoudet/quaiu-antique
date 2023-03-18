@@ -1,6 +1,6 @@
 <div class="article d-flex flex-column align-items-center">
         <h2 class="h2 mb-5">Ajouter un menu</h2>
-        <form method="POST" action="/ajouter-menu">
+        <form style="width:100%;" method="POST" action="/ajouter-menu">
         <div class="mb-3">
             <label for="title" class="form-label required h5">Nom</label>
             <input required type="text" class="form-control" id="title" name=data[title]>
@@ -10,7 +10,7 @@
             <textarea type="text" class="form-control" id="comments" name=data[comments] rows="3"></textarea>
         </div>
         <h4 class="h4"> Liste des mets associés au menus</h4>
-        <div class="dish-check d-flex mb-3">
+        <div class="dish-check d-flex flex-wrap mb-3">
 
         <?php foreach($data as $dish) : ?>
                 
