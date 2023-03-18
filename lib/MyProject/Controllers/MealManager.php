@@ -90,7 +90,7 @@ class MealManager
             $arrangements = $arrangementRepository->findAll();
             $data = ['meals' => $meals, 'arrangements' =>  $arrangements];
             $viewManager = new ViewManager;
-            $viewManager->renderAdmin($view,$data);
+            $viewManager->render($view,$data);
         }
         catch(Exception $e){
             exit($e);
