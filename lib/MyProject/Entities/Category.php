@@ -20,6 +20,8 @@ class Category
     #[ORM\Column(type: 'string')]
     private string $name;
 
+    #[ORM\Column(type: 'integer')]
+    private int $catOrder;
 
     /**
      * Get the value of id
@@ -66,6 +68,28 @@ class Category
     public function setDish($dish)
     {
         $this->dish = $dish;
+
+        return $this;
+    }
+
+
+
+    /**
+     * Get the value of catOrder
+     */ 
+    public function getCatOrder()
+    {
+        return $this->catOrder;
+    }
+
+    /**
+     * Set the value of catOrder
+     *
+     * @return  self
+     */ 
+    public function setCatOrder($catOrder)
+    {
+        $this->catOrder = $catOrder;
 
         return $this;
     }

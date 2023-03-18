@@ -23,6 +23,7 @@ if (isset($_POST['url'])) {
   $router->post('/creer-plage-annee', 'MyProject\Controller\BookManager@addAvailabilityForYear@data', true);
   $router->post('/reserver', 'MyProject\Controller\BookManager@book@data', true);
   $router->post('/checkavailabilities', 'MyProject\Controller\BookManager@checkIfAvailable@data', true);
+  $router->post('/orderCategories', 'MyProject\Controller\DishManager@orderCategories@orderedCategories', true);
   $router->run();
 }
 else {

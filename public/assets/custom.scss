@@ -19,6 +19,18 @@ $bs-tertiary-bg: #4C061D;
     font-size: 1rem;
 }
 
+h1, h2, h3, h4 {
+    text-align: center;
+}
+
+.bi-arrows-move {
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+h4 {
+
+}
 .navbar * {
     color: $secondary !important;
     font-size: 1.2rem;
@@ -26,7 +38,7 @@ $bs-tertiary-bg: #4C061D;
 
 
 
-.h1, .h2, .h3, .h4 {
+.h1, .h2 {
     font-family: 'DM Serif Display', serif;
     color: $primary !important;
 }

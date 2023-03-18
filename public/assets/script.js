@@ -79,10 +79,46 @@ $(function(){
     });
   });
 
+
+  $('#validate-category-sort').click((e)=> {
+    e.preventDefault();
+    let orderedCategories = [];
+    for (item of $('.list-group-item')) {
+      orderedCategories.push(item.innerText)
+    }
+    let tmpUrl = '/orderCategories';
+    $('#empty').load('/orderCategories',{'orderedCategories': orderedCategories, 'url': tmpUrl});
+  });
+
+  let arrangementIndex=1;
+  $('#add-arrangement').click((e)=> {
+    e.preventDefault();
+    let arrangementForm =   
+    `
+    <div class="arrangement card p-5 m-1 mb-2">\
+    <div class="mb-3">\
+        <label for="arrangementTitle-${arrangementIndex}" class="form-label required">Titre</label>\
+        <input required type="text" class="form-control" id="ArrangementTitle-${arrangementIndex}" name=data[arrangement][${arrangementIndex}][title]>\
+    </div>
+    <div class="mb-3">\
+        <label for="description-${arrangementIndex}" class="form-label">Description</label>
+        <textarea type="text" class="form-control" id="description-${arrangementIndex}" name=data[arrangement][${arrangementIndex}][description] rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="price-${arrangementIndex}" class="form-label required">Prix TTC</label>
+        <input required type="number" step="0.01" class="form-control" id="price-${arrangementIndex}" name=data[arrangement][${arrangementIndex}][price]>
+    </div>
+</div>
+    `
+    $('#add-arrangement').before(arrangementForm);
+    arrangementIndex++;
+  })
+
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
   //Booking management
-  console.log(dates);
   let d = new Date(2023, 0, 18);
 
   $( "#date" ).datepicker({
@@ -145,12 +181,29 @@ $(function(){
     $('#timeToBook').load('/checkavailabilities', {'data': data, 'url':'/checkavailabilities'});
     setTimeout(takeSlotId,500);
   });
+  
 
+ /////////////////////////// Sortable js //////////////////////////////
 
 
 });
 
- 
+// Simple list
+// Sortable.create(simpleList, { /* options */ });
+
+// List with handle
+Sortable.create(simpleList, {
+  handle: '.bi-arrows-move',
+  animation: 150,
+  sort: true
+});
+
+
+
+ ///////////////////////////////////////////////////////////////////////
+
+
+
 
 
 

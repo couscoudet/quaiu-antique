@@ -188,8 +188,23 @@ class DishManager {
             $viewManager = new ViewManager;
             $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addCategory.php';
             $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
-            $categories = $categoryRepository->findAll();
+            $categories = $categoryRepository->findBy(array(), array('catOrder' => 'ASC'));
             $viewManager->render($view,$categories);
+        }
+    }
+
+    public function orderCategories($orderedCategories)
+    {
+        try{
+            $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+            foreach($orderedCategories as $index => $categoryName){
+                $category = $categoryRepository->findOneBy( ['name' => $categoryName]);
+                $category->setCatOrder($index);
+            }
+            $this->em->flush();
+        }
+        catch(Exception $e){
+            exit($e);
         }
     }
 

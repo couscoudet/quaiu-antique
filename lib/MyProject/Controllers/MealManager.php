@@ -16,7 +16,7 @@ class MealManager
         if (!$data) {
             $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'create-menu-view.php';
             $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
-            $dishes = $dishRepository->findAll();
+            $dishes = $dishRepository->findBy(['isActive' => true]);
             $viewManager = new ViewManager;
             $viewManager->renderAdmin($view,$dishes);
         }
