@@ -106,6 +106,8 @@ class UserManager
         }
     }
 
+    
+
     /**
      * Get the value of em
      */ 

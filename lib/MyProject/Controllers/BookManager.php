@@ -6,6 +6,10 @@ use MyProject\Model\Booking;
 use MyProject\Model\Visitor;
 use Doctrine\ORM\EntityManager;
 use MyProject\View\ViewManager;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 
 require_once(__DIR__.'/../services/security.php');
 
@@ -116,6 +120,8 @@ class BookManager
                 $booking->setAvailability($availability);
                 $this->em->persist($booking);
                 $this->em->flush();
+                var_dump(date_format($availability->getStartSlot(), 'd/m/Y H:i'));
+                $this->sendBookConfirmation($visitorEmail, $availability->getStartSlot());
                 header('Location: /');
             }
             catch(Exception $e) {
@@ -162,6 +168,41 @@ class BookManager
             $this->viewManager->renderAdmin($view);
         }
 
+    }
+
+    public function sendBookConfirmation($customerMail, $date) {
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'mail.infomaniak.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'ysoultane@ik.me';                     //SMTP username
+            $mail->Password   = 'amni8UvHbJ@SKY4';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        
+            //Recipients
+            $mail->setFrom('ysoultane@ik.me', 'Quai Antique');     //Add a recipient
+            $mail->addAddress($customerMail);               //Name is optional
+            $mail->addReplyTo('ysoultane@ik.me', 'Quai Antique');
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Réservation confirmée';
+            $mail->Body    = '
+            <a href="https://le-quai-antique.herokuapp.com/"><img src="https://le-quai-antique.herokuapp.com/assets/logo.png"</a>
+            <h1>Réservation confirmée</h1>
+            <h2>le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:I').'</h2>
+            ';
+            $mail->AltBody = '
+            Réservation confirmée - le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:I');
+        
+            $mail->send();
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
     }
 
     /**
