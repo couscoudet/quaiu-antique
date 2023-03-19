@@ -20,7 +20,7 @@ function checkNumber(int $num) {
     } 
 }
 
-function checkIfMail(str $mail){
+function checkIfMail(string $mail){
     if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
         return $mail;
     } 
