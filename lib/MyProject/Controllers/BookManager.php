@@ -120,9 +120,9 @@ class BookManager
                 $booking->setAvailability($availability);
                 $this->em->persist($booking);
                 $this->em->flush();
-                var_dump(date_format($availability->getStartSlot(), 'd/m/Y H:i'));
                 $this->sendBookConfirmation($visitorEmail, $availability->getStartSlot());
-                header('Location: /');
+                $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'book-confirmation-view.php';
+                $this->viewManager->render($view);
             }
             catch(Exception $e) {
                 exit($e);
@@ -174,7 +174,7 @@ class BookManager
         $mail = new PHPMailer(true);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'mail.infomaniak.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -190,14 +190,14 @@ class BookManager
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Réservation confirmée';
+            $mail->Subject = mb_encode_mimeheader('Réservation confirmée');
             $mail->Body    = '
-            <a href="https://le-quai-antique.herokuapp.com/"><img src="https://le-quai-antique.herokuapp.com/assets/logo.png"</a>
+            <img src="https://le-quai-antique.herokuapp.com/assets/logo.png">
             <h1>Réservation confirmée</h1>
-            <h2>le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:I').'</h2>
+            <h2>le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:i').'</h2>
             ';
             $mail->AltBody = '
-            Réservation confirmée - le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:I');
+            Réservation confirmée - le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:i');
         
             $mail->send();
         } catch (Exception $e) {
