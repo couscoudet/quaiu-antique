@@ -25,6 +25,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
   font-size: 1.2rem;
 }
 
+.badge-bg {
+  background-color: rgba(76, 6, 29, 0.1450980392) !important;
+}
+
 .h1, .h2 {
   font-family: "DM Serif Display", serif;
   color: #4C061D !important;
@@ -90,6 +94,14 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 
 .ui-datepicker-month, .ui-datepicker-year {
   color: #16BAC5;
+}
+
+.swiper-button-next, .swiper-button-prev {
+  color: #16BAC5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #16BAC5 !important;
 }
 
 @media screen and (max-width: 800px) {

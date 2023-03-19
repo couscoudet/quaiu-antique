@@ -7,6 +7,7 @@ use MyProject\Model\Visitor;
 use Doctrine\ORM\EntityManager;
 use MyProject\View\ViewManager;
 
+require_once(__DIR__.'/../services/security.php');
 
 class BookManager 
 {
@@ -24,8 +25,11 @@ class BookManager
 
     public function checkIfAvailable($data)
     {
-        $peopleNumber = $data['peopleNumber'];
-        $date = date_create($data['date']);
+        if (checkNumber($data['peopleNumber'])) {
+           $peopleNumber = secure($data['peopleNumber']);
+        }
+        if (checkIfDate($data['date'])) {
+            $date = date_create(secure($data['date']));}
         $availabilityRepository = $this->em->getRepository('MyProject\\Model\\Availability');
         $availabilities = $availabilityRepository->createQueryBuilder('a')
         ->orderBy('a.startSlot', 'ASC')
@@ -63,19 +67,23 @@ class BookManager
 
     public function addAvailability($data = null)
     {
-        if ($data) {
-            try {
-                $availability  = new Availability;
-                $startDateTime = date_create($data['startDateTime'], timezone_open("Europe/Paris"));
-                $endDateTime = date_create($data['endDateTime'], timezone_open("Europe/Paris"));
-                $availability->setStartSlot($startDateTime);
-                $availability->setEndSlot($endDateTime);
-                $availability->setpeopleNumber($data['peopleNumber']);
-                $this->em->persist($availability);
-                $this->em->flush();
-            }
-            catch(Exception $e) {
-                exit($e);
+        if (checkIfAdmin()) {
+            if ($data) {
+                try {
+                    $availability  = new Availability;
+                    if (checkIfDate($data['startDateTime']) && checkIfDate($data['startDateTime'])) {
+                        $startDateTime = date_create(secure($data['startDateTime']), timezone_open("Europe/Paris"));
+                        $endDateTime = date_create(secure($data['endDateTime']), timezone_open("Europe/Paris"));
+                        $availability->setStartSlot($startDateTime);
+                        $availability->setEndSlot($endDateTime);
+                        $availability->setpeopleNumber(secure($data['peopleNumber']));
+                        $this->em->persist($availability);
+                        $this->em->flush();
+                    }
+                }
+                catch(Exception $e) {
+                    exit($e);
+                }
             }
         }
     }
@@ -90,9 +98,11 @@ class BookManager
         else {
             try {
                 $booking = new Booking;
-                $booking->setTitle($data['title']);
-                $booking->setPeopleNumber($data['peopleNumber']);
-                $visitorEmail = $data['email'];
+                $booking->setTitle(secure($data['title']));
+                if (checkNumber($data['peopleNumber'])) {
+                    $booking->setPeopleNumber(($data['peopleNumber']));
+                }
+                $visitorEmail = secure(checkIfMail($data['email']));
                 $visitorRepository = $this->em->getRepository('MyProject\\Model\\Visitor');
                 $visitor = $visitorRepository->findOneBy(['email' => $visitorEmail]);
                 if (!$visitor) {
@@ -101,7 +111,7 @@ class BookManager
                     $this->em->persist($visitor);
                 }
                 $availabilityRepository = $this->em->getRepository('MyProject\\Model\\Availability');
-                $availability = $availabilityRepository->find($data['slotId']);
+                $availability = $availabilityRepository->find(secure($data['slotId']));
                 $booking->setVisitor($visitor);
                 $booking->setAvailability($availability);
                 $this->em->persist($booking);
@@ -116,15 +126,15 @@ class BookManager
 
     public function addAvailabilityForYear($data = null)
     {
-        if ($data) {
+        if ($data && checkIfAdmin()) {
             // ini_set('xdebug.var_display_max_depth', -1);
             // ini_set('xdebug.var_display_max_children', -+1);
             // ini_set('xdebug.var_display_max_data', -1);
             // var_dump($data);
             // die();
-            $year = $data['year'];
-            $days = $data['days'];
-            $peopleNumber = $data['peopleNumber'];
+            $year = secure($data['year']);
+            $days = secure($data['days']);
+            $peopleNumber = secure($data['peopleNumber']);
             $startDate = date_create('01/01/'.$year, timezone_open("Europe/Paris"));
             $endDate = date_create('12/31/'.$year, timezone_open("Europe/Paris"));
             $count = intval(date_diff($startDate,$endDate)->format('%a'));

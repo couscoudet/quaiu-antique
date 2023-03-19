@@ -116,4 +116,24 @@ class Meal
 
         return $this;
     }
+
+    /**
+     * Get the value of dishes
+     */ 
+    public function getDishes()
+    {
+        return $this->dishes;
+    }
+
+    /**
+     * Set the value of dishes
+     *
+     * @return  self
+     */ 
+    public function setDishes($dishes)
+    {
+        $this->dishes = $dishes;
+
+        return $this;
+    }
 }

@@ -4,6 +4,8 @@ use MyProject\Model\Dish;
 use MyProject\Model\GalleryImage;
 
 require_once(MYPROJECT_DIR.DIRECTORY_SEPARATOR.'services/aws.php');
+require_once(__DIR__.'/../services/security.php');
+
 
 $image_target_dir = 'assets/dishImages';
 if ( ! is_dir($image_target_dir)) {
@@ -12,8 +14,10 @@ if ( ! is_dir($image_target_dir)) {
 $image;
 $uploadOK = false;
 if(($_FILES["dishImage"]["name"])) {
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
     $imageFileType = strtolower(pathinfo($_FILES["dishImage"]["name"],PATHINFO_EXTENSION));
-    $image = time()."_".str_replace(" ","-",strtolower(basename($_POST['dishTitle']) .'.'. $imageFileType));
+    $mimeType = $finfo->file($_FILES["dishImage"]["tmp_name"]);
+    $image = time()."_".str_replace(" ","-",strtolower(basename(secure($_POST['dishTitle'])) .'.'. $imageFileType));
 
     if ($_FILES["dishImage"]["size"] > 1000000) {
         echo '<div class="alert alert-danger"> Le fichier est trop volumineux, il doit faire moins de 1Mo.</div>';
@@ -22,7 +26,7 @@ if(($_FILES["dishImage"]["name"])) {
     else {
         $uploadOk = true;
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
+        && $imageFileType != "gif" && !in_array($mimeType, ['image/jpeg', 'image/png', 'image.gif'])) {
             echo '<div class="alert alert-danger">Uniquement fichiers JPG, JPEG, PNG & GIF acceptés.</div>';
             $uploadOk = false;
 
@@ -72,12 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     $data = [
-        'title' => isset($_POST['dishTitle']) ? ucwords($_POST['dishTitle']) : throw new error("pas de titre"),
-        'price' => isset($_POST['dishPrice']) ? $_POST['dishPrice'] : throw new error("pas de prix"),
-        'isActive' => (isset($_POST['activeDish']) && $_POST['activeDish']=='on') ? true : false,
+        'title' => isset($_POST['dishTitle']) ? ucwords(secure($_POST['dishTitle'])) : throw new RuntimeException("pas de titre"),
+        'price' => isset($_POST['dishPrice']) ? secure($_POST['dishPrice']) : throw new RuntimeException("pas de prix"),
+        'isActive' => (isset($_POST['activeDish']) && secure($_POST['activeDish'])=='on') ? true : false,
         // 'tags' => isset($_POST['tags']) ? $_POST['tags'] : [],
         'galleryImage' => ($_FILES['dishImage']['name']) ? $imageURL : null,
-        'category' => isset($_POST['category']) ? $_POST['category'] : throw new error("pas de categorie")
+        'category' => isset($_POST['category']) ? secure($_POST['category']) : throw new RuntimeException("pas de categorie")
     ];
     
     

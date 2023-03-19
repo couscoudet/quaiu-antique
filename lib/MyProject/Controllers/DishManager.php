@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query\ResultSetMapping;
 
+require_once(__DIR__.'/../services/security.php');
+
 class DishManager {
 
     private EntityManager $em;
@@ -36,16 +38,19 @@ class DishManager {
             $viewmanager->renderAdmin($view, $data);
         }
         else {
-            $data = [
-                'id' => $_POST['dishId'],
-                'title' => $_POST['dishTitle'],
-                'price' => $_POST['dishPrice'],
-                'isActive' => isset($_POST['activeDish']) ? $_POST['activeDish'] : false
-            ];
-            $dish = $dishRepository->find($_POST['dishId']);
-            $dish->hydrate($data);
-            $this->em->flush();
-            header("Location:/plats");
+            if (checkAdmin()) 
+            {
+                $data = [
+                'id' => secure($_POST['dishId']),
+                'title' => secure($_POST['dishTitle']),
+                'price' => secure($_POST['dishPrice']),
+                'isActive' => isset($_POST['activeDish']) ? secure($_POST['activeDish']) : false
+                ];
+                $dish = $dishRepository->find(secure($_POST['dishId']));
+                $dish->hydrate($data);
+                $this->em->flush();
+                header("Location:/plats");
+            }
         }
     }
 
@@ -66,8 +71,7 @@ class DishManager {
 
     public function delete(string $id)
     {
-        session_start();
-        if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') {
+        if (checkAdmin()) {
             $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
             $dish = $dishRepository->find($id);
             if ($dish->getGalleryImage()) {
@@ -101,32 +105,34 @@ class DishManager {
         }
     }
 
-    public function addDishToDB($data)
+    public function addDishToDB(array $data)
     {
-        $dish = new Dish();
-        $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
-        $category = $categoryRepository->findOneBy(['name' => $data['category']]);
-        $dish->setTitle($data['title']);
-        $dish->setPrice($data['price']);
-        $dish->setIsActive($data['isActive']);
-        $dish->setCategory($category);
-        if (($data['galleryImage'])) {
-            $galleryImage = new GalleryImage;
-            $galleryImage->setImageURL($data['galleryImage']);
-            $galleryImage->setIsActive(false);
-            $dish->setGalleryImage($galleryImage);
+        if (checkAdmin()) {
+            $dish = new Dish();
+            $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+            $category = $categoryRepository->findOneBy(['name' => secure($data['category'])]);
+            $dish->setTitle(secure($data['title']));
+            $dish->setPrice(secure($data['price']));
+            $dish->setIsActive(secure($data['isActive']));
+            $dish->setCategory($category);
+            if (($data['galleryImage'])) {
+                $galleryImage = new GalleryImage;
+                $galleryImage->setImageURL($data['galleryImage']);
+                $galleryImage->setIsActive(false);
+                $dish->setGalleryImage($galleryImage);
+            }
+            else {
+                $galleryImage = null;
+                $dish->setGalleryImage($galleryImage);
+            }
+            $this->em->persist($dish);    
+            if($data['galleryImage']) {
+                $this->em->persist($galleryImage);
+            }
+            $this->em->flush();
+            header("Location:/creer-plat");
+            die();
         }
-        else {
-            $galleryImage = null;
-            $dish->setGalleryImage($galleryImage);
-        }
-        $this->em->persist($dish);    
-        if($data['galleryImage']) {
-            $this->em->persist($galleryImage);
-        }
-        $this->em->flush();
-        header("Location:/creer-plat");
-        die();
     }
 
     public function galleryManager()
@@ -138,33 +144,37 @@ class DishManager {
         $viewManager->renderAdmin($view, $images);
     }
     
-    public function removeImageFromGallery($id)
+    public function removeImageFromGallery(int $id)
     {
-        try
-        {
-            $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
-            $image = $imageRepository->find($id);
-            $image->setIsActive(false);
-            $this->em->flush();
-            echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-plus-square addToGallery"></i>';
-        }
-        catch (Exception $e) {
-            echo $e;
+        if (checkAdmin()) {
+            try
+            {
+                $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
+                $image = $imageRepository->find($id);
+                $image->setIsActive(false);
+                $this->em->flush();
+                echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-plus-square addToGallery"></i>';
+            }
+            catch (Exception $e) {
+                echo $e;
+            }
         }
     }
 
     public function addImageToGallery($id)
     {
-        try
-        {
-            $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
-            $image = $imageRepository->find($id);
-            $image->setIsActive(true);
-            $this->em->flush();
-            echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-dash-square removeFromGallery"></i>';
-        }
-        catch (Exception $e) {
-            echo $e;
+        if (checkAdmin()) {
+            try
+            {
+                $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
+                $image = $imageRepository->find($id);
+                $image->setIsActive(true);
+                $this->em->flush();
+                echo '<i role="button" style="font-size: 2rem;" id="'.$image->getId().'" class="bi bi-dash-square removeFromGallery"></i>';
+            }
+            catch (Exception $e) {
+                echo $e;
+            }
         }
     }
 
@@ -179,7 +189,7 @@ class DishManager {
     public function addCategory() {
         if (isset($_POST['category'])) {
             $category = new Category;
-            $category->setName($_POST['category']);
+            $category->setName(secure($_POST['category']));
             $this->em->persist($category);
             $this->em->flush();
             header("Location: /ajouter-categorie");
@@ -189,22 +199,24 @@ class DishManager {
             $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'addCategory.php';
             $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
             $categories = $categoryRepository->findBy(array(), array('catOrder' => 'ASC'));
-            $viewManager->render($view,$categories);
+            $viewManager->renderAdmin($view,$categories);
         }
     }
 
     public function orderCategories($orderedCategories)
     {
-        try{
-            $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
-            foreach($orderedCategories as $index => $categoryName){
-                $category = $categoryRepository->findOneBy( ['name' => $categoryName]);
-                $category->setCatOrder($index);
+        if (checkAdmin()) {
+            try{
+                $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+                foreach($orderedCategories as $index => $categoryName){
+                    $category = $categoryRepository->findOneBy( ['name' => $categoryName]);
+                    $category->setCatOrder($index);
+                }
+                $this->em->flush();
             }
-            $this->em->flush();
-        }
-        catch(Exception $e){
-            exit($e);
+            catch(Exception $e){
+                exit($e);
+            }
         }
     }
 

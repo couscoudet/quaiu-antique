@@ -36,6 +36,9 @@ h4 {
     font-size: 1.2rem;
 }
 
+.badge-bg {
+    background-color: #4c061d25 !important;
+}
 
 
 .h1, .h2 {
@@ -101,6 +104,14 @@ border-color: $secondary;
 
 .ui-datepicker-month, .ui-datepicker-year {
     color:#16BAC5;
+}
+
+.swiper-button-next, .swiper-button-prev  {
+    color:#16BAC5 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #16BAC5 !important;
 }
 
 @media screen and (max-width: 800px) {

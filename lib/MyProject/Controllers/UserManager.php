@@ -9,6 +9,8 @@ use MyProject\Model\Customer;
 use Doctrine\ORM\EntityManager;
 use MyProject\View\ViewManager;
 
+require_once(__DIR__.'/../services/security.php');
+
 class UserManager
 {
     private EntityManager $em;
@@ -16,7 +18,7 @@ class UserManager
     public function addVisitor(string $email)
     {
         $visitor = new Visitor;
-        $visitor->setEmail($email);
+        $visitor->setEmail(checkIfMail($email));
         $this->em->persist($visitor);
         $this->em->flush();
     }
@@ -72,7 +74,7 @@ class UserManager
     {
         if(!isset($_POST['data'])){
             $viewManager = new ViewManager;
-            $viewManager->render('addAdmin.php');
+            $viewManager->renderAdmin('addAdmin.php');
         }
         else {
             $user = new Admin;
@@ -96,7 +98,7 @@ class UserManager
     {
         try {
             $userRepository = $this->em->getRepository('MyProject\\Model\\User');
-            $user = $userRepository->findOneBy(['email' => $email]);
+            $user = $userRepository->findOneBy(['email' => secure(checkIfMail($email))]);
             return ($user);
         }
         catch(Doctrine_Manager_Exception $e) {

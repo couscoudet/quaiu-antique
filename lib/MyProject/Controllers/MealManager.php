@@ -6,6 +6,7 @@ use MyProject\Model\Arrangement;
 use MyProject\View\ViewManager;
 use Doctrine\ORM\EntityManager;
 
+require_once(__DIR__.'/../services/security.php');
 
 class MealManager
 {
@@ -21,22 +22,22 @@ class MealManager
             $viewManager = new ViewManager;
             $viewManager->renderAdmin($view,$dishes);
         }
-        else {
+        else if (checkAdmin()) {
             $meal = new Meal($this->em);
-            $meal->setTitle($data['title']);
-            $meal->setComments($data['comments']);
+            $meal->setTitle(secure($data['title']));
+            $meal->setComments(secure($data['comments']));
             foreach ($data['dishes'] as $dishId) {
                 $mealRepository = $this->em->getRepository('MyProject\\Model\\Dish');
-                $dish = $mealRepository->find($dishId);
+                $dish = $mealRepository->find(secure($dishId));
                 if (isset($dish)) {
                     $meal->addDish($dish);
                 }
             }
             foreach ($data['arrangement'] as $mealArrangement) {
                 $arrangement = new Arrangement($this->em);
-                $arrangement->setTitle($mealArrangement['title']);
-                $arrangement->setDescription($mealArrangement['description']);
-                $arrangement->setPrice($mealArrangement['price']);
+                $arrangement->setTitle(secure($mealArrangement['title']));
+                $arrangement->setDescription(secure($mealArrangement['description']));
+                $arrangement->setPrice(secure($mealArrangement['price']));
                 $arrangement->setMeal($meal);
                 $this->em->persist($arrangement);
             }
@@ -63,11 +64,15 @@ class MealManager
 
     public function deleteMeal($mealId = null)
     {
-        session_start();
-        if ($mealId && isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') {
+        if(checkAdmin()) {
             try {
                 $mealRepository = $this->em->getRepository('MyProject\\Model\\Meal');
-                $meal = $mealRepository->find($mealId);
+                $meal = $mealRepository->find(secure($mealId));
+                $arrangementRepository = $this->em->getRepository('MyProject\\Model\\Arrangement');
+                $arrangements = $arrangementRepository->findBy(['meal' => secure($mealId)]);
+                foreach($arrangements as $arrangement) {
+                    $this->em->remove($arrangement);
+                }
                 $this->em->remove($meal);
                 $this->em->flush();
                 header('Location: /liste-menus');
