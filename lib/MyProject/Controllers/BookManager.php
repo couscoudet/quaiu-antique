@@ -33,7 +33,7 @@ class BookManager
            $peopleNumber = secure($data['peopleNumber']);
         }
         if (checkIfDate($data['date'])) {
-            $date = date_create(secure($data['date']));}
+        $date = date_create(secure($data['date']));}
         $availabilityRepository = $this->em->getRepository('MyProject\\Model\\Availability');
         $availabilities = $availabilityRepository->createQueryBuilder('a')
         ->orderBy('a.startSlot', 'ASC')
@@ -202,6 +202,33 @@ class BookManager
             $mail->send();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    public function bookings() {
+        $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'display-booking-view.php';
+        $this->viewManager->renderAdmin($view);
+    }
+
+    public function checkBookings($date) {
+        $availabilityRepository = $this->em->getRepository('MyProject\\Model\\Availability');
+        $availabilities = $availabilityRepository->findAll();
+        foreach($availabilities as $availability) {
+            if ($date === date_format($availability->getStartSlot(),"Y-m-d")) {
+                echo '<div class="mb-3"><strong>'.date_format($availability->getstartSlot(), 'd/m/Y H:i')." - ".date_format($availability->getendSlot(), 'd/m/Y H:i').'</strong>';
+                echo '<ul>';
+                $bookingRepository = $this->em->getRepository('MyProject\\Model\\Booking');
+                $bookings = $bookingRepository->findBy(['availability' => $availability]);
+                $bookingsCount = 0;
+                foreach($bookings as $booking) {
+                    $bookingsCount += $booking->getPeopleNumber();
+                    echo '<li>'.$booking->getTitle().' - Nb personnes : '.$booking->getPeopleNumber().
+                    '</li>';
+                }
+                echo '</ul>';
+                echo '<span class="badge bg-secondary m-1">Total :'.$bookingsCount.' personnes</span></div>';
+            }
+            
         }
     }
 

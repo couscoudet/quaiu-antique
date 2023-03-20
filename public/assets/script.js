@@ -145,7 +145,6 @@ $(function(){
 
 
   //Booking management
-  let d = new Date(2023, 0, 18);
 
   $( "#date" ).datepicker({
     altField: "date",
@@ -171,6 +170,7 @@ $(function(){
       }
     }
   });
+
 
   let data = {
     'peopleNumber': 0,
