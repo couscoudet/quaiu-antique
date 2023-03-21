@@ -81,7 +81,7 @@ class UserManager
             $user->hydrate($data);
             $this->em->persist($user);
             $this->em->flush();
-            header("Location: /plats");
+            header("Location: /");
             exit();
         }
     }
