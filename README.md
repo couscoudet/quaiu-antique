@@ -63,8 +63,7 @@ En savoir plus sur Doctrine : https://www.doctrine-project.org/projects/doctrine
  
 5. L'application utilise plusieurs bibliothèques via un lien CDN, une connexion active à Internet est donc nécessaire pour son fonctionnement
 ---
-**Créer un administrateur
-Vous pouvez créer un administrateur en accédant à l'URL :shipit: '/creer-administrateur' :shipit:
-L'accès a été volontairement laissé ouvert dans une démarche de test.**
+Vous pouvez créer un administrateur en accédant à l'URL :shipit: **'/creer-administrateur'** :shipit:
+L'accès a été volontairement laissé ouvert dans une démarche de test.
 ---
 Version disponible en ligne sur Heroku : https://le-quai-antique.herokuapp.com/
