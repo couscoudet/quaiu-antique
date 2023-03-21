@@ -20,4 +20,3 @@
         </form>
         <div id="empty" class="hidden"></div>
     </div>
-    ';

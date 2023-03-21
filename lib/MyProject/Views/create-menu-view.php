@@ -45,4 +45,3 @@
             <button type="submit" class="btn btn-secondary">Créer</button>
         </form>
     </div>
-    ';

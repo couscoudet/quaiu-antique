@@ -28,4 +28,3 @@
             <button type="submit" class="btn btn-secondary">Modifier</button>
         </form>
     </div>
-    ';
