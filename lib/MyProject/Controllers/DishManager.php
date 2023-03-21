@@ -38,7 +38,7 @@ class DishManager {
             $viewmanager->renderAdmin($view, $data);
         }
         else {
-            if (checkAdmin()) 
+            if (checkIfAdmin()) 
             {
                 $data = [
                 'id' => secure($_POST['dishId']),
@@ -71,7 +71,7 @@ class DishManager {
 
     public function delete(string $id)
     {
-        if (checkAdmin()) {
+        if (checkIfAdmin()) {
             $dishRepository = $this->em->getRepository('MyProject\\Model\\Dish');
             $dish = $dishRepository->find($id);
             if ($dish->getGalleryImage()) {
@@ -107,7 +107,7 @@ class DishManager {
 
     public function addDishToDB(array $data)
     {
-        if (checkAdmin()) {
+        if (checkIfAdmin()) {
             $dish = new Dish();
             $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
             $category = $categoryRepository->findOneBy(['name' => secure($data['category'])]);
@@ -146,7 +146,7 @@ class DishManager {
     
     public function removeImageFromGallery(int $id)
     {
-        if (checkAdmin()) {
+        if (checkIfAdmin()) {
             try
             {
                 $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
@@ -163,7 +163,7 @@ class DishManager {
 
     public function addImageToGallery($id)
     {
-        if (checkAdmin()) {
+        if (checkIfAdmin()) {
             try
             {
                 $imageRepository = $this->em->getRepository('MyProject\\Model\\GalleryImage');
@@ -190,6 +190,9 @@ class DishManager {
         if (isset($_POST['category'])) {
             $category = new Category;
             $category->setName(secure($_POST['category']));
+            $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
+            $categoryCount = $categoryRepository->count([]);
+            $category->setCatOrder($categoryCount + 1);
             $this->em->persist($category);
             $this->em->flush();
             header("Location: /ajouter-categorie");
@@ -205,7 +208,7 @@ class DishManager {
 
     public function orderCategories($orderedCategories)
     {
-        if (checkAdmin()) {
+        if (checkIfAdmin()) {
             try{
                 $categoryRepository = $this->em->getRepository('MyProject\\Model\\Category');
                 foreach($orderedCategories as $index => $categoryName){

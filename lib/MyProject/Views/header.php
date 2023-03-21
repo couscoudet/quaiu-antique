@@ -7,10 +7,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 ms-5 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/plats" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Découvrir
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link mx-3" href="/" role="button">Accueil</a>
+                </li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="/a-la-carte" role="button">A la carte</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="/nos-menus" role="button">Nos menus</a></li>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/nos-menus">Nos menus</a></li>
                         <li><a class="dropdown-item" href="/a-la-carte">A la carte</a></li>
@@ -27,13 +28,11 @@
                         Administration
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/plats">Liste des plats</a></li>
-                        <li><a class="dropdown-item" href="/creer-plat">Créer un plat</a></li>
-                        <li><a class="dropdown-item" href="/gerer-gallerie">Gérer gallerie</a></li>
-                        <li><a class="dropdown-item" href="/ajouter-categorie">Categories</a></li>
-                        <li><a class="dropdown-item" href="/ajouter-menu">Créer Menus</a></li>
-                        <li><a class="dropdown-item" href="/liste-menus">Liste des menus</a></li>
-                        <li><a class="dropdown-item" href="/creer-plage-annee">Créer créneaux année</a></li>
+                        <li><a class="dropdown-item" href="/plats">Les Plats</a></li>
+                        <li><a class="dropdown-item" href="/liste-menus">Les menus</a></li>
+                        <li><a class="dropdown-item" href="/reservations">Les réservations</a></li>
+                        <li><a class="dropdown-item" href="/gerer-galerie">Galerie d'accueil</a></li>
+
                         <!-- <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                     </ul>

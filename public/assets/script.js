@@ -22,6 +22,10 @@ const swiper = new Swiper('.swiper', {
   scrollbar: {
     el: '.swiper-scrollbar',
   },
+
+  autoplay: {
+    delay: 3000,
+  },
 });
 
 //JQuery
@@ -34,7 +38,7 @@ $(function(){
     $('#main').load('../assets/removeImage.php', {'url': tmpUrl});
   })
 
-  //remove meal
+  //delete meal
   let mealToDelete;
   $('.meal-bin').click(function(e){
     e.preventDefault();
@@ -49,7 +53,22 @@ $(function(){
     e.preventDefault();
     $('#delete-meal').attr('href','');
   })
-  
+
+  //delete dish
+  let dishToDelete;
+  $('.dish-bin').click(function(e){
+    e.preventDefault();
+    dishToDelete = e.target.id;
+    // $('#main').load('../assets/removeImage.php', {'url': tmpUrl});
+    // setTimeout(() => location.href = "/creer-plat", 500);
+    let link = '/delete-dish/' + dishToDelete;
+    $('#delete-dish').attr('href',link);
+  })
+
+  $('#cancel-dish').click(function(e){
+    e.preventDefault();
+    $('#delete-dish').attr('href','');
+  })
 
   //Gallery Image Management
   $('.gallery-manager').click(function(e){

@@ -121,8 +121,6 @@ class BookManager
                 $this->em->persist($booking);
                 $this->em->flush();
                 $this->sendBookConfirmation($visitorEmail, $availability->getStartSlot());
-                $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'book-confirmation-view.php';
-                $this->viewManager->render($view);
             }
             catch(Exception $e) {
                 exit($e);
@@ -176,17 +174,17 @@ class BookManager
             //Server settings
             // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'mail.infomaniak.com';                     //Set the SMTP server to send through
+            $mail->Host       = $_ENV['MAIL_HOST'];                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'ysoultane@ik.me';                     //SMTP username
-            $mail->Password   = 'amni8UvHbJ@SKY4';                               //SMTP password
+            $mail->Username   = $_ENV['MAIL_SENDER'];                     //SMTP username
+            $mail->Password   = $_ENV['MAIL_PASS'];                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = $_ENV['MAIL_PORT'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         
             //Recipients
-            $mail->setFrom('ysoultane@ik.me', 'Quai Antique');     //Add a recipient
+            $mail->setFrom($_ENV['MAIL_SENDER'], 'Quai Antique');     //Add a recipient
             $mail->addAddress($customerMail);               //Name is optional
-            $mail->addReplyTo('ysoultane@ik.me', 'Quai Antique');
+            $mail->addReplyTo($_ENV['MAIL_SENDER'], 'Quai Antique');
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
@@ -200,8 +198,10 @@ class BookManager
             Réservation confirmée - le '.date_format($date,'d/m/Y').' à partir de '.date_format($date,'H:i');
         
             $mail->send();
+            $view = MYPROJECT_DIR.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'book-confirmation-view.php';
+            $this->viewManager->render($view);
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo "Nous avons bien enregistré votre réservation, mais notre serveur mail a rencontré une erreur: {$mail->ErrorInfo}";
         }
     }
 
@@ -216,19 +216,60 @@ class BookManager
         foreach($availabilities as $availability) {
             if ($date === date_format($availability->getStartSlot(),"Y-m-d")) {
                 echo '<div class="mb-3"><strong>'.date_format($availability->getstartSlot(), 'd/m/Y H:i')." - ".date_format($availability->getendSlot(), 'd/m/Y H:i').'</strong>';
+                echo '<i id="'.$availability->getId().'" type="button" class="bi bi-trash3 mx-1 availability-bin" data-bs-toggle="modal" data-bs-target="#deleteModalAvailability"></i>';
                 echo '<ul>';
                 $bookingRepository = $this->em->getRepository('MyProject\\Model\\Booking');
                 $bookings = $bookingRepository->findBy(['availability' => $availability]);
                 $bookingsCount = 0;
                 foreach($bookings as $booking) {
+                    $binIcon = '<i id="'.$booking->getId().'" type="button" class="bi bi-trash3 mx-1 booking-bin" data-bs-toggle="modal" data-bs-target="#deleteModalBooking"></i>';
                     $bookingsCount += $booking->getPeopleNumber();
-                    echo '<li>'.$booking->getTitle().' - Nb personnes : '.$booking->getPeopleNumber().
-                    '</li>';
+                    echo '<li>'.$booking->getTitle().' - Nb personnes : '.$booking->getPeopleNumber();
+                    echo $binIcon ;
+                    echo '</li>';
                 }
                 echo '</ul>';
                 echo '<span class="badge bg-secondary m-1">Total :'.$bookingsCount.' personnes</span></div>';
             }
             
+        }
+        echo '<script src="/assets/deletescript.js"></script>';
+    }
+
+    public function deleteAvailability($id) {
+        if (checkIfAdmin())
+        {
+            try {
+            $availabilityRepository = $this->em->getRepository('MyProject\\Model\\Availability');
+            $bookingRepository = $this->em->getRepository('MyProject\\Model\\Booking');
+            $availability = $availabilityRepository->find($id); 
+            $bookings = $bookingRepository->findBy(['availability' => $availability]);
+            foreach($bookings as $booking) {
+                $this->em->remove($booking);
+            }
+            $this->em->remove($availability);
+            $this->em->flush();
+            header("Location:/reservations");
+            }
+            catch(Exception $e) {
+                echo $e;
+            }
+        }
+    }
+
+    public function deleteBooking($id) {
+        if (checkIfAdmin())
+        {
+            try {
+            $bookingRepository = $this->em->getRepository('MyProject\\Model\\Booking');
+            $booking = $bookingRepository->find($id); 
+            $this->em->remove($booking);
+            $this->em->flush();
+            header("Location:/reservations");
+            }
+            catch(Exception $e) {
+                echo $e;
+            }
         }
     }
 

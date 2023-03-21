@@ -5,7 +5,36 @@
         <input type="text" class="form-control" id="book-date" name="">
     </div>
 </div>
-
+<a type="button" class="btn btn-primary mx-2 my-5" href="/creer-plage-annee">Ajouter des créneaux</a>
+<!-- Modal -->
+<div class="modal fade" id="deleteModalAvailability" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Supprimer ce créneau et l'ensemble de ses réservations ?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel-availability" data-bs-dismiss="modal">Annuler</button>
+        <a href="" type="button" class="btn btn-primary" id="delete-availability">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteModalBooking" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Supprimer cette réservation ?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel-booking" data-bs-dismiss="modal">Annuler</button>
+        <a href="" type="button" class="btn btn-primary" id="delete-booking">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="<?= ASSETS.DIRECTORY_SEPARATOR.'jquery-ui-1.13.2.custom'.DIRECTORY_SEPARATOR ?>external/jquery/jquery.js"></script>
 <script src="<?= ASSETS.DIRECTORY_SEPARATOR.'jquery-ui-1.13.2.custom'.DIRECTORY_SEPARATOR ?>jquery-ui.js"></script>
 <script>

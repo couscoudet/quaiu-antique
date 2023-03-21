@@ -1,11 +1,12 @@
 <h2 class="h2">Liste des menus</h2>
-<ul>
+<a type="button" class="btn btn-primary mx-2 my-5" href="/ajouter-menu">Ajouter un menu</a>
+
 <?php foreach($data as $meal) : ?>
 
-<li class="m-4"><?=$meal->getTitle()?> - <i id=<?=$meal->getId()?> type="button" class="bi bi-trash3 ms-5 meal-bin" data-bs-toggle="modal" data-bs-target="#deleteModal"></i></li>
+<h5 class="h5"><?=$meal->getTitle()?><i id=<?=$meal->getId()?> type="button" class="bi bi-trash3 ms-5 meal-bin" data-bs-toggle="modal" data-bs-target="#deleteModal"></i></h5>
 
 <?php endforeach; ?>
-</ul>
+
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

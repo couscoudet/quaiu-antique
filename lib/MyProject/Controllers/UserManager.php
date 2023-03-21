@@ -74,7 +74,7 @@ class UserManager
     {
         if(!isset($_POST['data'])){
             $viewManager = new ViewManager;
-            $viewManager->Admin('addAdmin.php');
+            $viewManager->render('addAdmin.php');
         }
         else {
             $user = new Admin;

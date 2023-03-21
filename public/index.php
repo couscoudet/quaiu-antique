@@ -39,12 +39,12 @@ else {
   $router->get('/delete-dish/:id', 'MyProject\Controller\DishManager@delete', true);
   $router->get('/ajout-visiteur/:email', 'MyProject\Controller\UserManager@addVisitor', true);
   $router->get('/login', 'MyProject\Controller\UserManager@logUser', false);
-  $router->get('/gerer-gallerie', 'MyProject\Controller\DishManager@galleryManager', true);
+  $router->get('/gerer-galerie', 'MyProject\Controller\DishManager@galleryManager', true);
   $router->get('/removeImageFromGallery/:id', 'MyProject\Controller\DishManager@removeImageFromGallery', true);
   $router->get('/addImageToGallery/:id','MyProject\Controller\DishManager@addImageToGallery', true);
   $router->get('/logout', 'MyProject\Controller\UserManager@logOutUser', false);
   $router->get('/a-la-carte', 'MyProject\Controller\DishManager@displayCard', true);
-  $router->get('/ajouter-categorie', 'MyProject\Controller\DishManager@addCategory', true);
+  $router->get('/gerer-categories', 'MyProject\Controller\DishManager@addCategory', true);
   $router->get('/ajouter-menu','MyProject\Controller\MealManager@createMeal', true);
   $router->get('/liste-menus','MyProject\Controller\MealManager@MealsList', true);
   $router->get('/delete-meal/:mealId', 'MyProject\Controller\MealManager@deleteMeal', true);
@@ -52,6 +52,9 @@ else {
   $router->get('/reserver', 'MyProject\Controller\BookManager@book@data', true);
   $router->get('/nos-menus', 'MyProject\Controller\MealManager@displayMeal', true);
   $router->get('/reservations', 'MyProject\Controller\BookManager@bookings', true);
+  $router->get('/delete-availability/:id', 'MyProject\Controller\BookManager@deleteAvailability', true);
+  $router->get('/delete-booking/:id', 'MyProject\Controller\BookManager@deleteBooking', true);
+
   $router->run();
 }
 ?>

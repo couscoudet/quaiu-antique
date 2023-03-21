@@ -22,7 +22,7 @@ class MealManager
             $viewManager = new ViewManager;
             $viewManager->renderAdmin($view,$dishes);
         }
-        else if (checkAdmin()) {
+        else if (checkIfAdmin()) {
             $meal = new Meal($this->em);
             $meal->setTitle(secure($data['title']));
             $meal->setComments(secure($data['comments']));
@@ -64,7 +64,7 @@ class MealManager
 
     public function deleteMeal($mealId = null)
     {
-        if(checkAdmin()) {
+        if(checkIfAdmin()) {
             try {
                 $mealRepository = $this->em->getRepository('MyProject\\Model\\Meal');
                 $meal = $mealRepository->find(secure($mealId));

@@ -35,10 +35,16 @@ L'utilisation de l'application nécessite la configuration de vos propres variab
 - Pour la gestion des images : Vous devez avoir au préalable des accès aux service cloud S3 AWS afin de créer vos clés d'accès :
 AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY
 - Pour la connexion à la base de données (base de développement ou de production) :
-Nom d'utilisateur : DB_USER_DEV ou DB_USER
-Password : DB_PASSWORD_DEV ou DB_PASSWORD
-Nom de la base de données : DB_NAME_DEV ou DB_NAME
-Domaine : DB_HOST_DEV DB_HOST
+ - Nom d'utilisateur : DB_USER_DEV ou DB_USER
+ - Password : DB_PASSWORD_DEV ou DB_PASSWORD
+ - Nom de la base de données : DB_NAME_DEV ou DB_NAME
+ - Domaine : DB_HOST_DEV DB_HOST
+
+- Pour la connexion au serveur mail smtp :
+ - Email du compte sortant : MAIL_SENDER
+ - Password : MAIL_PASS
+ - Port : MAIL_PORT
+ - Domaine : MAIL_HOST
 
 4. Création des tables de la base de données
 Doctrine utilise des instructions spécifiques afin de créer et mapper la base de données, ainsi que des classes Proxy.
@@ -49,7 +55,10 @@ Saisir ces 2 instructions dans le terminal afin de générer les tables correspo
     ./vendor/bin/doctrine-migrations migrate
 ```
 Au besoin, vous pouvez supprimer l'ensemble des tables avec l'instruction suivante :
+```
     php bin/doctrine orm:schema-tool:drop -f
+```
+
 En savoir plus sur Doctrine : https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/tutorials/getting-started.html 
  
 5. L'application utilise plusieurs bibliothèques via un lien CDN, une connexion active à Internet est donc nécessaire pour son fonctionnement
