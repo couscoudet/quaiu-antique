@@ -62,9 +62,9 @@ Au besoin, vous pouvez supprimer l'ensemble des tables avec l'instruction suivan
 En savoir plus sur Doctrine : https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/tutorials/getting-started.html 
  
 5. L'application utilise plusieurs bibliothèques via un lien CDN, une connexion active à Internet est donc nécessaire pour son fonctionnement
-
-6. Créer un administrateur
-Vous pouvez créer un administrateur en accédant à l'URL '/creer-administrateur'
-L'accès a été volontairement laissé ouvert dans une démarche de test.
+---
+**Créer un administrateur
+Vous pouvez créer un administrateur en accédant à l'URL :shipit: '/creer-administrateur' :shipit:
+L'accès a été volontairement laissé ouvert dans une démarche de test.**
 ---
 Version disponible en ligne sur Heroku : https://le-quai-antique.herokuapp.com/
