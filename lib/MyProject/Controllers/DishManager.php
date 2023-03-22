@@ -195,7 +195,7 @@ class DishManager {
             $category->setCatOrder($categoryCount + 1);
             $this->em->persist($category);
             $this->em->flush();
-            header("Location: /ajouter-categorie");
+            header("Location: /gerer-categorie");
         }
         else {
             $viewManager = new ViewManager;
