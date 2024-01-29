@@ -67,3 +67,4 @@ Vous pouvez créer un administrateur en accédant à l'URL :shipit: **'/creer-ad
 L'accès a été volontairement laissé ouvert dans une démarche de test.
 ---
 Version disponible en ligne sur Heroku : https://le-quai-antique.herokuapp.com/
+**A noter : suite à l'annulation de l'abonnement au service AWS s3, les images ne sont plus disponibles**
